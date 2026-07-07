@@ -1,0 +1,46 @@
+# GDELT Analysis Platform Dependencies
+# 安装: pip install -r requirements.txt
+
+
+# API Server
+fastapi>=0.115.0
+uvicorn[standard]>=0.32.0
+
+# LLM API & Agent Framework
+openai>=1.55.0
+google-generativeai>=0.8.0  # Gemini
+langchain>=0.3.0
+langchain-openai>=0.2.0
+langgraph>=0.2.0
+
+# HTTP Client
+aiohttp>=3.9.0
+httpx>=0.27.0
+
+# Configuration
+python-dotenv>=1.0.0
+
+# Data Processing
+pydantic>=2.9.0
+pandas
+numpy
+torch>=2.2.0
+tabulate
+
+# Database
+aiomysql
+mysql-connector-python
+
+# Web Scraping
+beautifulsoup4
+
+# Vector Database & Embeddings
+chromadb
+sentence-transformers
+
+# Google BigQuery (GKG)
+google-cloud-bigquery>=3.0.0
+google-auth>=2.0.0
+
+# Optional: YAML config support
+# pyyaml>=6.0

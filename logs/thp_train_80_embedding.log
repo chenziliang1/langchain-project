@@ -1,0 +1,11 @@
+time="2026-04-24T23:10:39-04:00" level=warning msg="E:\\DBMSproject-latest\\docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+windows=137280 series=416 dimension_groups=104
+global_daily_rows=366
+country_count=3
+actor_count=50
+country_pair_count=30
+event_root_count=20
+series_preview=['actor:AMERICAN:all', 'actor:AMERICAN:conflict', 'actor:AMERICAN:cooperation', 'actor:AMERICAN:protest', 'actor:ATTORNEY:all', 'actor:ATTORNEY:conflict', 'actor:ATTORNEY:cooperation', 'actor:ATTORNEY:protest']
+split_strategy=time_based split_day_index=311 train_samples=116896 val_samples=20384
+epoch=001 train_loss=0.06263 val_loss=0.04374
+epoch=010 train_loss=0.03435 val_loss=0.04035

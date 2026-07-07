@@ -1,0 +1,13 @@
+Hello! Could you please check the structure of the events_table and briefly tell me what fields we can use to analyze geographic locations and event impacts?
+
+Great. Now, please run a query to count exactly how many total event records we currently have in this table.
+
+Find the top 5 most severe conflict events (where GoldsteinScale is the lowest). Please list their exact date, the Actor 1 Country Code, and the source URL. After listing them, briefly summarize what kind of real-world issues these extreme events are about based on their URLs.
+
+Let's focus on geography. For events that happened specifically in the United States (ActionGeo_CountryCode = 'US'), what are the top 3 most frequent EventCodes? Please explain what these abstract codes actually mean in human language.
+
+*Spatio-time story line test prompt:
+
+step 1:Find the largest protest event (EventCode starts with '14') in Texas (ActionGeo_FullName LIKE '%Texas%') in February 2024. Execute EXACTLY ONE SQL query ordered by NumMentions DESC LIMIT 1. Tell me its exact date and coordinates based on that single query. DO NOT expand the search, DO NOT double-check, and DO NOT execute any further queries.
+
+step 2: Great! Now use EXACTLY the coordinates (Lat: 31.1060000, Long: -97.6475000) and date '2024-02-28' to automatically do a SECOND query. Find if there were any police-related events (Actor1Type1Code = 'COP' OR Actor2Type1Code = 'COP') that happened within 5 days AFTER that protest, and within a 100,000 meter radius. Execute EXACTLY ONE SQL query. Then synthesize the findings into a brief causal narrative (max 2 paragraphs). DO NOT expand the search, and DO NOT execute more than one query.

@@ -1,0 +1,299 @@
+sweep_output_dir=/app/models/thp_sweeps/sweep_20260504_032159_2024_only
+trial_count=8
+data_scope=2024_current_database_only
+starting_trial=1/8 config={"batch_size": 1024, "compile": false, "d_model": 64, "dropout": 0.1, "heads": 4, "layers": 2, "lr": 0.001, "seq_len": 14, "target_stat_shrinkage": 14.0, "top_actor_pairs": 30, "top_actors": 50, "top_countries": 50, "top_country_pairs": 30, "top_event_codes": 50, "top_event_roots": 20, "weight_decay": 0.0001}
+device=cuda
+cuda_device=NVIDIA GeForce RTX 3060 Laptop GPU
+windows=254656 series=736 dimension_groups=184
+global_daily_rows=366
+country_count=3
+actor_count=50
+country_pair_count=30
+actor_pair_count=30
+event_root_count=20
+event_code_count=50
+series_preview=['actor:ADMINISTRATION:all', 'actor:ADMINISTRATION:conflict', 'actor:ADMINISTRATION:cooperation', 'actor:ADMINISTRATION:protest', 'actor:AMERICAN:all', 'actor:AMERICAN:conflict', 'actor:AMERICAN:cooperation', 'actor:AMERICAN:protest']
+split_strategy=time_based split_day_index=311 train_samples=218592 val_samples=36064
+epoch=001 train_loss=0.14661 val_loss=0.23461 val_mae=158.042 val_rmse=986.937 monitor_mae=158.04227
+epoch=010 train_loss=-0.01668 val_loss=0.12561 val_mae=92.546 val_rmse=682.493 monitor_mae=92.54568
+epoch=020 train_loss=-0.02855 val_loss=0.13184 val_mae=88.085 val_rmse=630.064 monitor_mae=88.08468
+early_stopped epoch=026 best_epoch=018 best_mae=85.63778
+metrics neural_thp mae=85.638 rmse=629.215 mape=37.197
+metrics naive_last mae=202.133 rmse=1200.802 mape=52.908
+metrics moving_avg_7 mae=167.738 rmse=907.720 mape=49.559
+metrics empirical_hawkes mae=168.444 rmse=947.017 mape=48.926
+saved_checkpoint=/app/models/thp_sweeps/sweep_20260504_032159_2024_only/trial_01_seq14_d64_l2_lr0p001_do0p1.pt
+best_val_loss=0.12470
+best_epoch=18
+best_mae=85.63778
+samples=254656 series=736
+label_preview=[('actor:ADMINISTRATION', 'all'), ('actor:ADMINISTRATION', 'all'), ('actor:ADMINISTRATION', 'all')]
+{
+  "raw_mae": 85.62486267089844,
+  "raw_rmse": 629.10791015625,
+  "calibrated_mae": 84.69197082519531,
+  "calibrated_rmse": 627.7046508789062,
+  "scope_count": 95
+}
+saved_checkpoint=/app/models/thp_sweeps/sweep_20260504_032159_2024_only/trial_01_seq14_d64_l2_lr0p001_do0p1.pt
+finished_trial=1 status=ok score=116.07720336914062
+starting_trial=2/8 config={"batch_size": 1024, "compile": false, "d_model": 96, "dropout": 0.05, "heads": 4, "layers": 2, "lr": 0.0007, "seq_len": 14, "target_stat_shrinkage": 28.0, "top_actor_pairs": 30, "top_actors": 50, "top_countries": 50, "top_country_pairs": 30, "top_event_codes": 50, "top_event_roots": 20, "weight_decay": 0.0001}
+device=cuda
+cuda_device=NVIDIA GeForce RTX 3060 Laptop GPU
+windows=254656 series=736 dimension_groups=184
+global_daily_rows=366
+country_count=3
+actor_count=50
+country_pair_count=30
+actor_pair_count=30
+event_root_count=20
+event_code_count=50
+series_preview=['actor:ADMINISTRATION:all', 'actor:ADMINISTRATION:conflict', 'actor:ADMINISTRATION:cooperation', 'actor:ADMINISTRATION:protest', 'actor:AMERICAN:all', 'actor:AMERICAN:conflict', 'actor:AMERICAN:cooperation', 'actor:AMERICAN:protest']
+split_strategy=time_based split_day_index=311 train_samples=218592 val_samples=36064
+epoch=001 train_loss=0.10497 val_loss=0.17922 val_mae=152.042 val_rmse=920.544 monitor_mae=152.04221
+epoch=010 train_loss=-0.03294 val_loss=0.09886 val_mae=97.069 val_rmse=706.190 monitor_mae=97.06876
+epoch=020 train_loss=-0.04520 val_loss=0.10535 val_mae=92.913 val_rmse=658.875 monitor_mae=92.91331
+epoch=030 train_loss=-0.05529 val_loss=0.11759 val_mae=99.834 val_rmse=678.390 monitor_mae=99.83389
+early_stopped epoch=031 best_epoch=023 best_mae=87.32236
+metrics neural_thp mae=87.322 rmse=619.239 mape=38.850
+metrics naive_last mae=202.133 rmse=1200.802 mape=52.908
+metrics moving_avg_7 mae=167.738 rmse=907.720 mape=49.559
+metrics empirical_hawkes mae=168.444 rmse=947.017 mape=48.926
+saved_checkpoint=/app/models/thp_sweeps/sweep_20260504_032159_2024_only/trial_02_seq14_d96_l2_lr0p0007_do0p05.pt
+best_val_loss=0.10352
+best_epoch=23
+best_mae=87.32236
+samples=254656 series=736
+label_preview=[('actor:ADMINISTRATION', 'all'), ('actor:ADMINISTRATION', 'all'), ('actor:ADMINISTRATION', 'all')]
+{
+  "raw_mae": 87.312255859375,
+  "raw_rmse": 619.157958984375,
+  "calibrated_mae": 85.92422485351562,
+  "calibrated_rmse": 614.8983154296875,
+  "scope_count": 95
+}
+saved_checkpoint=/app/models/thp_sweeps/sweep_20260504_032159_2024_only/trial_02_seq14_d96_l2_lr0p0007_do0p05.pt
+finished_trial=2 status=ok score=116.669140625
+starting_trial=3/8 config={"batch_size": 1024, "compile": false, "d_model": 64, "dropout": 0.05, "heads": 4, "layers": 3, "lr": 0.0007, "seq_len": 21, "target_stat_shrinkage": 7.0, "top_actor_pairs": 30, "top_actors": 50, "top_countries": 50, "top_country_pairs": 30, "top_event_codes": 50, "top_event_roots": 20, "weight_decay": 0.0003}
+device=cuda
+cuda_device=NVIDIA GeForce RTX 3060 Laptop GPU
+windows=249504 series=736 dimension_groups=184
+global_daily_rows=366
+country_count=3
+actor_count=50
+country_pair_count=30
+actor_pair_count=30
+event_root_count=20
+event_code_count=50
+series_preview=['actor:ADMINISTRATION:all', 'actor:ADMINISTRATION:conflict', 'actor:ADMINISTRATION:cooperation', 'actor:ADMINISTRATION:protest', 'actor:AMERICAN:all', 'actor:AMERICAN:conflict', 'actor:AMERICAN:cooperation', 'actor:AMERICAN:protest']
+split_strategy=time_based split_day_index=311 train_samples=213440 val_samples=36064
+epoch=001 train_loss=0.17873 val_loss=0.29679 val_mae=177.434 val_rmse=1153.033 monitor_mae=177.43387
+epoch=010 train_loss=-0.00381 val_loss=0.16190 val_mae=107.056 val_rmse=744.873 monitor_mae=107.05574
+epoch=020 train_loss=-0.02139 val_loss=0.15354 val_mae=95.008 val_rmse=683.076 monitor_mae=95.00787
+epoch=030 train_loss=-0.03156 val_loss=0.16782 val_mae=100.333 val_rmse=713.343 monitor_mae=100.33307
+early_stopped epoch=030 best_epoch=022 best_mae=89.75013
+metrics neural_thp mae=89.750 rmse=645.270 mape=38.426
+metrics naive_last mae=202.133 rmse=1200.802 mape=52.908
+metrics moving_avg_7 mae=167.738 rmse=907.720 mape=49.559
+metrics empirical_hawkes mae=169.707 rmse=945.941 mape=49.974
+saved_checkpoint=/app/models/thp_sweeps/sweep_20260504_032159_2024_only/trial_03_seq21_d64_l3_lr0p0007_do0p05.pt
+best_val_loss=0.14902
+best_epoch=22
+best_mae=89.75013
+samples=249504 series=736
+label_preview=[('actor:ADMINISTRATION', 'all'), ('actor:ADMINISTRATION', 'all'), ('actor:ADMINISTRATION', 'all')]
+{
+  "raw_mae": 89.75204467773438,
+  "raw_rmse": 645.328369140625,
+  "calibrated_mae": 88.60460662841797,
+  "calibrated_rmse": 642.309814453125,
+  "scope_count": 95
+}
+saved_checkpoint=/app/models/thp_sweeps/sweep_20260504_032159_2024_only/trial_03_seq21_d64_l3_lr0p0007_do0p05.pt
+finished_trial=3 status=ok score=120.72009735107423
+starting_trial=4/8 config={"batch_size": 1024, "compile": false, "d_model": 64, "dropout": 0.1, "heads": 4, "layers": 2, "lr": 0.001, "seq_len": 30, "target_stat_shrinkage": 14.0, "top_actor_pairs": 30, "top_actors": 50, "top_countries": 50, "top_country_pairs": 30, "top_event_codes": 50, "top_event_roots": 20, "weight_decay": 0.0001}
+device=cuda
+cuda_device=NVIDIA GeForce RTX 3060 Laptop GPU
+windows=242880 series=736 dimension_groups=184
+global_daily_rows=366
+country_count=3
+actor_count=50
+country_pair_count=30
+actor_pair_count=30
+event_root_count=20
+event_code_count=50
+series_preview=['actor:ADMINISTRATION:all', 'actor:ADMINISTRATION:conflict', 'actor:ADMINISTRATION:cooperation', 'actor:ADMINISTRATION:protest', 'actor:AMERICAN:all', 'actor:AMERICAN:conflict', 'actor:AMERICAN:cooperation', 'actor:AMERICAN:protest']
+split_strategy=time_based split_day_index=311 train_samples=206816 val_samples=36064
+epoch=001 train_loss=0.14641 val_loss=0.23456 val_mae=157.231 val_rmse=968.031 monitor_mae=157.23140
+epoch=010 train_loss=-0.01798 val_loss=0.13220 val_mae=107.434 val_rmse=765.195 monitor_mae=107.43430
+epoch=020 train_loss=-0.02968 val_loss=0.14942 val_mae=106.342 val_rmse=758.526 monitor_mae=106.34221
+epoch=030 train_loss=-0.03833 val_loss=0.15503 val_mae=102.501 val_rmse=732.760 monitor_mae=102.50143
+early_stopped epoch=037 best_epoch=029 best_mae=91.13111
+metrics neural_thp mae=91.131 rmse=657.837 mape=42.411
+metrics naive_last mae=202.133 rmse=1200.802 mape=52.908
+metrics moving_avg_7 mae=167.738 rmse=907.720 mape=49.559
+metrics empirical_hawkes mae=164.196 rmse=918.392 mape=50.561
+saved_checkpoint=/app/models/thp_sweeps/sweep_20260504_032159_2024_only/trial_04_seq30_d64_l2_lr0p001_do0p1.pt
+best_val_loss=0.14237
+best_epoch=29
+best_mae=91.13111
+samples=242880 series=736
+label_preview=[('actor:ADMINISTRATION', 'all'), ('actor:ADMINISTRATION', 'all'), ('actor:ADMINISTRATION', 'all')]
+{
+  "raw_mae": 91.12783813476562,
+  "raw_rmse": 657.7711791992188,
+  "calibrated_mae": 89.617919921875,
+  "calibrated_rmse": 650.98828125,
+  "scope_count": 95
+}
+saved_checkpoint=/app/models/thp_sweeps/sweep_20260504_032159_2024_only/trial_04_seq30_d64_l2_lr0p001_do0p1.pt
+finished_trial=4 status=ok score=122.167333984375
+starting_trial=5/8 config={"batch_size": 1024, "compile": false, "d_model": 96, "dropout": 0.1, "heads": 4, "layers": 3, "lr": 0.0007, "seq_len": 14, "target_stat_shrinkage": 7.0, "top_actor_pairs": 30, "top_actors": 50, "top_countries": 50, "top_country_pairs": 30, "top_event_codes": 50, "top_event_roots": 20, "weight_decay": 0.0001}
+device=cuda
+cuda_device=NVIDIA GeForce RTX 3060 Laptop GPU
+windows=254656 series=736 dimension_groups=184
+global_daily_rows=366
+country_count=3
+actor_count=50
+country_pair_count=30
+actor_pair_count=30
+event_root_count=20
+event_code_count=50
+series_preview=['actor:ADMINISTRATION:all', 'actor:ADMINISTRATION:conflict', 'actor:ADMINISTRATION:cooperation', 'actor:ADMINISTRATION:protest', 'actor:AMERICAN:all', 'actor:AMERICAN:conflict', 'actor:AMERICAN:cooperation', 'actor:AMERICAN:protest']
+split_strategy=time_based split_day_index=311 train_samples=218592 val_samples=36064
+epoch=001 train_loss=0.16250 val_loss=0.25972 val_mae=154.359 val_rmse=938.966 monitor_mae=154.35904
+epoch=010 train_loss=-0.01000 val_loss=0.14997 val_mae=93.701 val_rmse=677.259 monitor_mae=93.70071
+epoch=020 train_loss=-0.02708 val_loss=0.17359 val_mae=99.619 val_rmse=684.732 monitor_mae=99.61918
+early_stopped epoch=023 best_epoch=015 best_mae=84.83144
+metrics neural_thp mae=84.831 rmse=605.653 mape=37.587
+metrics naive_last mae=202.133 rmse=1200.802 mape=52.908
+metrics moving_avg_7 mae=167.738 rmse=907.720 mape=49.559
+metrics empirical_hawkes mae=168.444 rmse=947.017 mape=48.926
+saved_checkpoint=/app/models/thp_sweeps/sweep_20260504_032159_2024_only/trial_05_seq14_d96_l3_lr0p0007_do0p1.pt
+best_val_loss=0.14611
+best_epoch=15
+best_mae=84.83144
+samples=254656 series=736
+label_preview=[('actor:ADMINISTRATION', 'all'), ('actor:ADMINISTRATION', 'all'), ('actor:ADMINISTRATION', 'all')]
+{
+  "raw_mae": 84.83214569091797,
+  "raw_rmse": 605.6275024414062,
+  "calibrated_mae": 83.7718505859375,
+  "calibrated_rmse": 604.7097778320312,
+  "scope_count": 95
+}
+saved_checkpoint=/app/models/thp_sweeps/sweep_20260504_032159_2024_only/trial_05_seq14_d96_l3_lr0p0007_do0p1.pt
+finished_trial=5 status=ok score=114.00733947753906
+starting_trial=6/8 config={"batch_size": 1024, "compile": false, "d_model": 96, "dropout": 0.05, "heads": 4, "layers": 2, "lr": 0.0007, "seq_len": 21, "target_stat_shrinkage": 14.0, "top_actor_pairs": 30, "top_actors": 50, "top_countries": 50, "top_country_pairs": 30, "top_event_codes": 50, "top_event_roots": 20, "weight_decay": 0.0003}
+device=cuda
+cuda_device=NVIDIA GeForce RTX 3060 Laptop GPU
+windows=249504 series=736 dimension_groups=184
+global_daily_rows=366
+country_count=3
+actor_count=50
+country_pair_count=30
+actor_pair_count=30
+event_root_count=20
+event_code_count=50
+series_preview=['actor:ADMINISTRATION:all', 'actor:ADMINISTRATION:conflict', 'actor:ADMINISTRATION:cooperation', 'actor:ADMINISTRATION:protest', 'actor:AMERICAN:all', 'actor:AMERICAN:conflict', 'actor:AMERICAN:cooperation', 'actor:AMERICAN:protest']
+split_strategy=time_based split_day_index=311 train_samples=213440 val_samples=36064
+epoch=001 train_loss=0.13863 val_loss=0.22156 val_mae=154.206 val_rmse=957.221 monitor_mae=154.20644
+epoch=010 train_loss=-0.01765 val_loss=0.13165 val_mae=104.431 val_rmse=738.198 monitor_mae=104.43073
+epoch=020 train_loss=-0.03261 val_loss=0.13923 val_mae=96.496 val_rmse=683.820 monitor_mae=96.49604
+early_stopped epoch=029 best_epoch=021 best_mae=91.13945
+metrics neural_thp mae=91.139 rmse=651.856 mape=41.008
+metrics naive_last mae=202.133 rmse=1200.802 mape=52.908
+metrics moving_avg_7 mae=167.738 rmse=907.720 mape=49.559
+metrics empirical_hawkes mae=169.707 rmse=945.941 mape=49.974
+saved_checkpoint=/app/models/thp_sweeps/sweep_20260504_032159_2024_only/trial_06_seq21_d96_l2_lr0p0007_do0p05.pt
+best_val_loss=0.13641
+best_epoch=21
+best_mae=91.13945
+samples=249504 series=736
+label_preview=[('actor:ADMINISTRATION', 'all'), ('actor:ADMINISTRATION', 'all'), ('actor:ADMINISTRATION', 'all')]
+{
+  "raw_mae": 91.14849090576172,
+  "raw_rmse": 651.8908081054688,
+  "calibrated_mae": 89.35380554199219,
+  "calibrated_rmse": 644.3973388671875,
+  "scope_count": 95
+}
+saved_checkpoint=/app/models/thp_sweeps/sweep_20260504_032159_2024_only/trial_06_seq21_d96_l2_lr0p0007_do0p05.pt
+finished_trial=6 status=ok score=121.57367248535157
+starting_trial=7/8 config={"batch_size": 1024, "compile": false, "d_model": 64, "dropout": 0.05, "heads": 4, "layers": 2, "lr": 0.001, "seq_len": 14, "target_stat_shrinkage": 28.0, "top_actor_pairs": 30, "top_actors": 50, "top_countries": 50, "top_country_pairs": 30, "top_event_codes": 50, "top_event_roots": 20, "weight_decay": 0.0003}
+device=cuda
+cuda_device=NVIDIA GeForce RTX 3060 Laptop GPU
+windows=254656 series=736 dimension_groups=184
+global_daily_rows=366
+country_count=3
+actor_count=50
+country_pair_count=30
+actor_pair_count=30
+event_root_count=20
+event_code_count=50
+series_preview=['actor:ADMINISTRATION:all', 'actor:ADMINISTRATION:conflict', 'actor:ADMINISTRATION:cooperation', 'actor:ADMINISTRATION:protest', 'actor:AMERICAN:all', 'actor:AMERICAN:conflict', 'actor:AMERICAN:cooperation', 'actor:AMERICAN:protest']
+split_strategy=time_based split_day_index=311 train_samples=218592 val_samples=36064
+epoch=001 train_loss=0.11109 val_loss=0.18558 val_mae=153.303 val_rmse=933.226 monitor_mae=153.30327
+epoch=010 train_loss=-0.03317 val_loss=0.09741 val_mae=92.848 val_rmse=682.191 monitor_mae=92.84785
+epoch=020 train_loss=-0.04450 val_loss=0.10199 val_mae=86.685 val_rmse=621.726 monitor_mae=86.68517
+epoch=030 train_loss=-0.05273 val_loss=0.12002 val_mae=96.425 val_rmse=682.121 monitor_mae=96.42452
+early_stopped epoch=031 best_epoch=023 best_mae=85.16267
+metrics neural_thp mae=85.163 rmse=622.420 mape=39.381
+metrics naive_last mae=202.133 rmse=1200.802 mape=52.908
+metrics moving_avg_7 mae=167.738 rmse=907.720 mape=49.559
+metrics empirical_hawkes mae=168.444 rmse=947.017 mape=48.926
+saved_checkpoint=/app/models/thp_sweeps/sweep_20260504_032159_2024_only/trial_07_seq14_d64_l2_lr0p001_do0p05.pt
+best_val_loss=0.10158
+best_epoch=23
+best_mae=85.16267
+samples=254656 series=736
+label_preview=[('actor:ADMINISTRATION', 'all'), ('actor:ADMINISTRATION', 'all'), ('actor:ADMINISTRATION', 'all')]
+{
+  "raw_mae": 85.15977478027344,
+  "raw_rmse": 622.3596801757812,
+  "calibrated_mae": 84.25878143310547,
+  "calibrated_rmse": 621.1568603515625,
+  "scope_count": 95
+}
+saved_checkpoint=/app/models/thp_sweeps/sweep_20260504_032159_2024_only/trial_07_seq14_d64_l2_lr0p001_do0p05.pt
+finished_trial=7 status=ok score=115.31662445068359
+starting_trial=8/8 config={"batch_size": 1024, "compile": false, "d_model": 96, "dropout": 0.1, "heads": 4, "layers": 2, "lr": 0.0007, "seq_len": 21, "target_stat_shrinkage": 28.0, "top_actor_pairs": 30, "top_actors": 50, "top_countries": 50, "top_country_pairs": 30, "top_event_codes": 50, "top_event_roots": 20, "weight_decay": 0.0003}
+device=cuda
+cuda_device=NVIDIA GeForce RTX 3060 Laptop GPU
+windows=249504 series=736 dimension_groups=184
+global_daily_rows=366
+country_count=3
+actor_count=50
+country_pair_count=30
+actor_pair_count=30
+event_root_count=20
+event_code_count=50
+series_preview=['actor:ADMINISTRATION:all', 'actor:ADMINISTRATION:conflict', 'actor:ADMINISTRATION:cooperation', 'actor:ADMINISTRATION:protest', 'actor:AMERICAN:all', 'actor:AMERICAN:conflict', 'actor:AMERICAN:cooperation', 'actor:AMERICAN:protest']
+split_strategy=time_based split_day_index=311 train_samples=213440 val_samples=36064
+epoch=001 train_loss=0.10441 val_loss=0.18178 val_mae=156.358 val_rmse=978.501 monitor_mae=156.35843
+epoch=010 train_loss=-0.03191 val_loss=0.10122 val_mae=104.777 val_rmse=742.870 monitor_mae=104.77724
+epoch=020 train_loss=-0.04398 val_loss=0.10667 val_mae=100.639 val_rmse=704.471 monitor_mae=100.63885
+epoch=030 train_loss=-0.05237 val_loss=0.12380 val_mae=102.581 val_rmse=699.712 monitor_mae=102.58141
+early_stopped epoch=032 best_epoch=024 best_mae=92.21696
+metrics neural_thp mae=92.217 rmse=643.150 mape=41.139
+metrics naive_last mae=202.133 rmse=1200.802 mape=52.908
+metrics moving_avg_7 mae=167.738 rmse=907.720 mape=49.559
+metrics empirical_hawkes mae=169.707 rmse=945.941 mape=49.974
+saved_checkpoint=/app/models/thp_sweeps/sweep_20260504_032159_2024_only/trial_08_seq21_d96_l2_lr0p0007_do0p1.pt
+best_val_loss=0.10487
+best_epoch=24
+best_mae=92.21696
+samples=249504 series=736
+label_preview=[('actor:ADMINISTRATION', 'all'), ('actor:ADMINISTRATION', 'all'), ('actor:ADMINISTRATION', 'all')]
+{
+  "raw_mae": 92.23746490478516,
+  "raw_rmse": 643.282470703125,
+  "calibrated_mae": 90.33404541015625,
+  "calibrated_rmse": 636.359130859375,
+  "scope_count": 95
+}
+saved_checkpoint=/app/models/thp_sweeps/sweep_20260504_032159_2024_only/trial_08_seq21_d96_l2_lr0p0007_do0p1.pt
+finished_trial=8 status=ok score=122.152001953125
+deployed_best_checkpoint=/app/models/thp_gdelt.pt
+best_trial=5 score=114.007 mae=83.772 rmse=604.710 checkpoint=/app/models/thp_sweeps/sweep_20260504_032159_2024_only/trial_05_seq14_d96_l3_lr0p0007_do0p1.pt
+THP_GPU_SWEEP_DONE

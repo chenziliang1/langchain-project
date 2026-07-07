@@ -1,0 +1,40 @@
+device=cuda
+cuda_device=NVIDIA GeForce RTX 3060 Laptop GPU
+windows=254656 series=736 dimension_groups=184
+global_daily_rows=366
+country_count=3
+actor_count=50
+country_pair_count=30
+actor_pair_count=30
+event_root_count=20
+event_code_count=50
+series_preview=['actor:ADMINISTRATION:all', 'actor:ADMINISTRATION:conflict', 'actor:ADMINISTRATION:cooperation', 'actor:ADMINISTRATION:protest', 'actor:AMERICAN:all', 'actor:AMERICAN:conflict', 'actor:AMERICAN:cooperation', 'actor:AMERICAN:protest']
+split_strategy=time_based split_day_index=311 train_samples=218592 val_samples=36064
+epoch=001 train_loss=0.14661 val_loss=0.23461 val_mae=158.042 val_rmse=986.937 monitor_mae=158.04227
+epoch=010 train_loss=-0.01668 val_loss=0.12561 val_mae=92.546 val_rmse=682.493 monitor_mae=92.54568
+epoch=020 train_loss=-0.02855 val_loss=0.13184 val_mae=88.085 val_rmse=630.064 monitor_mae=88.08468
+epoch=030 train_loss=-0.03738 val_loss=0.13914 val_mae=89.791 val_rmse=643.725 monitor_mae=89.79126
+epoch=040 train_loss=-0.04433 val_loss=0.14107 val_mae=90.834 val_rmse=633.908 monitor_mae=90.83395
+epoch=050 train_loss=-0.05000 val_loss=0.15347 val_mae=95.850 val_rmse=667.473 monitor_mae=95.85049
+epoch=060 train_loss=-0.05461 val_loss=0.15619 val_mae=95.508 val_rmse=650.757 monitor_mae=95.50760
+epoch=070 train_loss=-0.05855 val_loss=0.16375 val_mae=101.342 val_rmse=689.530 monitor_mae=101.34198
+epoch=080 train_loss=-0.06186 val_loss=0.16204 val_mae=94.780 val_rmse=633.195 monitor_mae=94.77987
+metrics neural_thp mae=85.638 rmse=629.215 mape=37.197
+metrics naive_last mae=202.133 rmse=1200.802 mape=52.908
+metrics moving_avg_7 mae=167.738 rmse=907.720 mape=49.559
+metrics empirical_hawkes mae=168.444 rmse=947.017 mape=48.926
+saved_checkpoint=/app/models/thp_gdelt.pt
+best_val_loss=0.12470
+best_epoch=18
+best_mae=85.63778
+samples=254656 series=736
+label_preview=[('actor:ADMINISTRATION', 'all'), ('actor:ADMINISTRATION', 'all'), ('actor:ADMINISTRATION', 'all')]
+{
+  "raw_mae": 85.62486267089844,
+  "raw_rmse": 629.10791015625,
+  "calibrated_mae": 84.69197082519531,
+  "calibrated_rmse": 627.7046508789062,
+  "scope_count": 95
+}
+saved_checkpoint=/app/models/thp_gdelt.pt
+TRAINING_AND_CALIBRATION_DONE

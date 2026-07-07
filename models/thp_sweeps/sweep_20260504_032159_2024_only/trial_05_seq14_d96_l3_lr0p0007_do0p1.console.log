@@ -1,0 +1,36 @@
+$ /usr/local/bin/python db_scripts/train_thp_model.py --epochs 60 --early-stopping-patience 8 --seq-len 14 --forecast-horizon 7 --d-model 96 --layers 3 --heads 4 --lr 0.0007 --batch-size 1024 --dropout 0.1 --weight-decay 0.0001 --target-normalization series_event --target-stat-shrinkage 7.0 --device cuda --output /app/models/thp_sweeps/sweep_20260504_032159_2024_only/trial_05_seq14_d96_l3_lr0p0007_do0p1.pt --dataset-cache /app/models/thp_sweeps/sweep_20260504_032159_2024_only/dataset_seq14_h7_countries50_actors50_cp30_ap30_roots20_codes50.npz --training-log /app/models/thp_sweeps/sweep_20260504_032159_2024_only/trial_05_seq14_d96_l3_lr0p0007_do0p1.jsonl --top-countries 50 --top-actors 50 --top-country-pairs 30 --top-actor-pairs 30 --top-event-roots 20 --top-event-codes 50 --min-series-events 10 --amp
+device=cuda
+cuda_device=NVIDIA GeForce RTX 3060 Laptop GPU
+windows=254656 series=736 dimension_groups=184
+global_daily_rows=366
+country_count=3
+actor_count=50
+country_pair_count=30
+actor_pair_count=30
+event_root_count=20
+event_code_count=50
+series_preview=['actor:ADMINISTRATION:all', 'actor:ADMINISTRATION:conflict', 'actor:ADMINISTRATION:cooperation', 'actor:ADMINISTRATION:protest', 'actor:AMERICAN:all', 'actor:AMERICAN:conflict', 'actor:AMERICAN:cooperation', 'actor:AMERICAN:protest']
+split_strategy=time_based split_day_index=311 train_samples=218592 val_samples=36064
+epoch=001 train_loss=0.16250 val_loss=0.25972 val_mae=154.359 val_rmse=938.966 monitor_mae=154.35904
+epoch=010 train_loss=-0.01000 val_loss=0.14997 val_mae=93.701 val_rmse=677.259 monitor_mae=93.70071
+epoch=020 train_loss=-0.02708 val_loss=0.17359 val_mae=99.619 val_rmse=684.732 monitor_mae=99.61918
+early_stopped epoch=023 best_epoch=015 best_mae=84.83144
+metrics neural_thp mae=84.831 rmse=605.653 mape=37.587
+metrics naive_last mae=202.133 rmse=1200.802 mape=52.908
+metrics moving_avg_7 mae=167.738 rmse=907.720 mape=49.559
+metrics empirical_hawkes mae=168.444 rmse=947.017 mape=48.926
+saved_checkpoint=/app/models/thp_sweeps/sweep_20260504_032159_2024_only/trial_05_seq14_d96_l3_lr0p0007_do0p1.pt
+best_val_loss=0.14611
+best_epoch=15
+best_mae=84.83144
+samples=254656 series=736
+label_preview=[('actor:ADMINISTRATION', 'all'), ('actor:ADMINISTRATION', 'all'), ('actor:ADMINISTRATION', 'all')]
+$ /usr/local/bin/python db_scripts/calibrate_thp_checkpoint.py --checkpoint /app/models/thp_sweeps/sweep_20260504_032159_2024_only/trial_05_seq14_d96_l3_lr0p0007_do0p1.pt --dataset-cache /app/models/thp_sweeps/sweep_20260504_032159_2024_only/dataset_seq14_h7_countries50_actors50_cp30_ap30_roots20_codes50.npz --batch-size 2048 --device cuda
+{
+  "raw_mae": 84.83214569091797,
+  "raw_rmse": 605.6275024414062,
+  "calibrated_mae": 83.7718505859375,
+  "calibrated_rmse": 604.7097778320312,
+  "scope_count": 95
+}
+saved_checkpoint=/app/models/thp_sweeps/sweep_20260504_032159_2024_only/trial_05_seq14_d96_l3_lr0p0007_do0p1.pt

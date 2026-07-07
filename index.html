@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spatio-Temporal Narrative AI Agent for North America Event Analysis via MCP Architecture</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        vtMaroon: '#861F41',
+                        vtOrange: '#E87722',
+                        vtStone: '#E5E1E0',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f8f8;
+        }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, #861F41 0%, #631630 100%);
+        }
+    </style>
+</head>
+
+<body class="text-gray-800">
+
+    <header class="hero-gradient text-white pt-16 pb-12 px-4 shadow-xl">
+        <div class="max-w-5xl mx-auto text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
+                Spatio-Temporal Narrative AI Agent for North America Event Analysis via MCP Architecture
+            </h1>
+
+            <div class="flex flex-wrap justify-center gap-4 mt-6">
+                <a href="/chat"
+                    class="bg-vtOrange text-white px-6 py-2 rounded shadow hover:opacity-90 transition flex items-center gap-2 font-semibold border border-white/20">
+                    <i class="fas fa-comments"></i> Launch Chat UI
+                </a>
+                <a href="#proposal"
+                    class="bg-white text-vtMaroon px-6 py-2 rounded shadow hover:bg-gray-100 transition flex items-center gap-2 font-semibold">
+                    <i class="fas fa-file-alt"></i> View Project Proposal
+                </a>
+                <a href="#files"
+                    class="bg-white text-vtMaroon px-6 py-2 rounded shadow hover:bg-gray-100 transition flex items-center gap-2 font-semibold">
+                    <i class="fas fa-folder-open"></i> Project Files
+                </a>
+                <a href="#team"
+                    class="bg-white/10 text-white px-6 py-2 rounded shadow hover:bg-white/20 transition flex items-center gap-2 font-semibold border border-white/20">
+                    <i class="fas fa-users"></i> Meet The Team
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 py-12">
+
+        <section id="overview" class="bg-white rounded-xl shadow-sm border border-gray-100 p-8 mb-10">
+            <div
+                class="inline-block bg-vtMaroon/10 text-vtMaroon px-4 py-1 rounded-full text-sm font-bold mb-6 border border-vtMaroon/20">
+                <i class="fas fa-book-open mr-2"></i> Project Overview
+            </div>
+            <p class="leading-relaxed text-gray-600 text-lg">
+                In the era of big data, understanding the root causes of major socio-political hotspots requires tracing
+                complex historical and geographical footprints. While traditional data management systems excel at
+                isolated data retrieval, they lack the autonomous reasoning needed to uncover historical trajectories
+                dynamically. To address this gap, we propose a Spatio-Temporal Narrative AI Agent designed to
+                automatically discover and synthesize antecedent events leading up to a user-defined target event.
+                Leveraging the GDELT 2.0 dataset focused on 2024 North American events hosted in a MySQL database, our
+                system employs the Model Context Protocol (MCP) to bridge the gap between relational data and Large
+                Language Models (LLMs). Through MCP tool integration, the LLM agent dynamically translates its reasoning
+                steps into executable SQL queries (Text2SQL), autonomously traversing the MySQL database to retrieve
+                preceding interactions among related actors and locations. By combining these dynamically queried
+                structured records with unstructured news texts via a Retrieval-Augmented Generation (RAG) pipeline, the
+                agent translates fragmented data into a coherent, chronological narrative of causality. Ultimately, this
+                project demonstrates a novel approach to exploratory data analysis, showcasing how MCP-empowered agents
+                can transform static relational databases into engines for dynamic spatio-temporal storytelling.
+            </p>
+        </section>
+
+        <section class="bg-gradient-to-r from-vtMaroon to-[#5f1831] text-white rounded-xl shadow-sm p-8 mb-10">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                <div class="max-w-2xl">
+                    <div class="inline-block bg-white/10 px-4 py-1 rounded-full text-sm font-bold mb-4 border border-white/15">
+                        <i class="fas fa-robot mr-2"></i> New Interactive Frontend
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Chat with the GDELT agent in a ChatGPT-style workspace</h3>
+                    <p class="text-white/80 leading-relaxed">
+                        The new web frontend adds a multi-session chat experience with a sidebar, message history,
+                        prompt cards, and direct integration with the existing MCP-powered analysis workflow.
+                    </p>
+                </div>
+                <div class="flex flex-wrap gap-3">
+                    <a href="/chat"
+                        class="bg-white text-vtMaroon px-6 py-3 rounded-lg shadow hover:bg-gray-100 transition flex items-center gap-2 font-semibold">
+                        <i class="fas fa-arrow-right"></i> Open Chat Workspace
+                    </a>
+                    <span class="px-4 py-3 rounded-lg border border-white/20 text-sm text-white/80">
+                        Start with: <code>python run_web.py</code>
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <div class="grid md:grid-cols-2 gap-8 mb-10">
+            <section id="proposal" class="bg-white rounded-xl shadow-sm border border-gray-100 p-8">
+                <h3 class="text-xl font-bold text-vtMaroon mb-4 border-b pb-2">Project Files</h3>
+                <ul class="space-y-4">
+                    <li>
+                        <a href="Proposal_Tang_Gao_Miao_Chen.pdf" target="_blank"
+                            class="flex items-center justify-between p-4 bg-gray-50 rounded hover:bg-gray-100 transition border border-transparent hover:border-vtMaroon/20 group">
+                            <span class="flex items-center gap-3">
+                                <i class="fas fa-file-pdf text-red-600 text-xl"></i>
+                                <span class="font-medium group-hover:text-vtMaroon">Project_Proposal_of_DBMS.pdf</span>
+                            </span>
+                            <i class="fas fa-external-link-alt text-gray-400 group-hover:text-vtMaroon"></i>
+                        </a>
+                            <a href="Project_check_point_1.pdf" target="_blank"
+                            class="flex items-center justify-between p-4 bg-gray-50 rounded hover:bg-gray-100 transition border border-transparent hover:border-vtMaroon/20 group">
+                            <span class="flex items-center gap-3">
+                                <i class="fas fa-file-pdf text-red-600 text-xl"></i>
+                                <span class="font-medium group-hover:text-vtMaroon">Project_check_point_1.pdf</span>
+                            </span>
+                            <i class="fas fa-external-link-alt text-gray-400 group-hover:text-vtMaroon"></i>
+                        </a>
+                        <a href="Checkpoint_Tang_Gao_Zhang_Miao.pdf" target="_blank"
+                            class="flex items-center justify-between p-4 bg-gray-50 rounded hover:bg-gray-100 transition border border-transparent hover:border-vtMaroon/20 group">
+                            <span class="flex items-center gap-3">
+                                <i class="fas fa-file-pdf text-red-600 text-xl"></i>
+                                <span class="font-medium group-hover:text-vtMaroon">Project_check_point_2.pdf</span>
+                            </span>
+                            <i class="fas fa-external-link-alt text-gray-400 group-hover:text-vtMaroon"></i>
+                        </a>
+                    </li>
+
+                    <!-- <li
+                        class="flex items-center justify-between p-3 bg-gray-50 rounded hover:bg-gray-100 transition cursor-pointer">
+                        <span class="flex items-center gap-3"><i class="fas fa-file-word text-blue-600"></i>
+                            Checkpoint_Report.docx</span>
+                        <i class="fas fa-download text-gray-400"></i>
+                    </li> -->
+                </ul>
+            </section>
+
+            <section class="bg-white rounded-xl shadow-sm border border-gray-100 p-8">
+                <h3 class="text-xl font-bold text-vtMaroon mb-4 border-b pb-2">Key Data Sources</h3>
+                <div class="space-y-3">
+                    <div class="flex gap-3">
+                        <span class="text-2xl text-vtOrange"></span>
+                        <div>
+                            <p class="font-bold">GDELT NA events</p>
+                            <p class="text-sm text-gray-500">A real-time data stream that leverages Large Language
+                                Models (LLMs) to identify, quantify, and track the underlying narratives and persuasive
+                                techniques used in global news coverage.</p>
+                        </div>
+                    </div>
+                    <!-- <div class="flex gap-3">
+                        <span class="text-2xl text-vtOrange"><i class="fas fa-satellite-dish"></i></span>
+                        <div>
+                            <p class="font-bold">VTTI Smart Intersections</p>
+                            <p class="text-sm text-gray-500">Real-time vehicle and pedestrian movement.</p>
+                        </div>
+                    </div> -->
+                </div>
+            </section>
+        </div>
+
+        <section id="team" class="bg-white rounded-xl shadow-sm border border-gray-100 p-8 mb-10">
+            <h3 class="text-2xl font-bold text-center text-vtMaroon mb-10">Meet Our Team</h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div
+                        class="w-24 h-24 bg-vtStone rounded-full mx-auto mb-4 border-2 border-vtOrange flex items-center justify-center overflow-hidden">
+                        <i class="fas fa-user text-3xl text-gray-400"></i>
+                    </div>
+                    <p class="font-bold text-vtMaroon">Xing Gao</p>
+                    <p class="text-xs text-gray-500 uppercase">Researcher</p>
+                </div>
+                <div class="text-center">
+                    <div
+                        class="w-24 h-24 bg-vtStone rounded-full mx-auto mb-4 border-2 border-vtOrange flex items-center justify-center">
+                        <i class="fas fa-user text-3xl text-gray-400"></i>
+                    </div>
+                    <p class="font-bold text-vtMaroon">Xiangxin Tang</p>
+                    <p class="text-xs text-gray-500 uppercase">Researcher</p>
+                </div>
+                <div class="text-center">
+                    <div
+                        class="w-24 h-24 bg-vtStone rounded-full mx-auto mb-4 border-2 border-vtOrange flex items-center justify-center">
+                        <i class="fas fa-user text-3xl text-gray-400"></i>
+                    </div>
+                    <p class="font-bold text-vtMaroon">Yuxin Miao</p>
+                    <p class="text-xs text-gray-500 uppercase">Researcher</p>
+                </div>
+                <div class="text-center">
+                    <div
+                        class="w-24 h-24 bg-vtStone rounded-full mx-auto mb-4 border-2 border-vtOrange flex items-center justify-center">
+                        <i class="fas fa-user text-3xl text-gray-400"></i>
+                    </div>
+                    <p class="font-bold text-vtMaroon">Ziliang Chen</p>
+                    <p class="text-xs text-gray-500 uppercase">Researcher</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-100 border-t py-8 text-center text-gray-500 text-sm">
+        <p>© 2026 Virginia Tech</p>
+        <p class="mt-2 text-vtMaroon font-semibold italic">Ut Prosim (That I May Serve)</p>
+    </footer>
+
+</body>
+
+</html>

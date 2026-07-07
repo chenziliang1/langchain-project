@@ -1,0 +1,21 @@
+time="2026-04-24T21:22:08-04:00" level=warning msg="E:\\DBMSproject-latest\\docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+windows=137280 series=416 dimension_groups=104
+global_daily_rows=366
+country_count=3
+actor_count=50
+country_pair_count=30
+event_root_count=20
+series_preview=['actor:AMERICAN:all', 'actor:AMERICAN:conflict', 'actor:AMERICAN:cooperation', 'actor:AMERICAN:protest', 'actor:ATTORNEY:all', 'actor:ATTORNEY:conflict', 'actor:ATTORNEY:cooperation', 'actor:ATTORNEY:protest']
+epoch=001 train_loss=0.04977 val_loss=0.03730
+epoch=010 train_loss=0.03461 val_loss=0.03464
+epoch=020 train_loss=0.03390 val_loss=0.03430
+epoch=030 train_loss=0.03322 val_loss=0.03385
+epoch=040 train_loss=0.03276 val_loss=0.03300
+epoch=050 train_loss=0.03228 val_loss=0.03311
+epoch=060 train_loss=0.03185 val_loss=0.03290
+epoch=070 train_loss=0.03138 val_loss=0.03238
+epoch=080 train_loss=0.03126 val_loss=0.03250
+saved_checkpoint=/app/models/thp_gdelt.pt
+best_val_loss=0.03234
+samples=137280 series=416
+label_preview=[('actor:AMERICAN', 'all'), ('actor:AMERICAN', 'all'), ('actor:AMERICAN', 'all')]

@@ -1,0 +1,287 @@
+\documentclass[11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=1in]{geometry}
+\usepackage{microtype}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{xcolor}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!60!black,
+    urlcolor=blue!60!black,
+    citecolor=blue!60!black
+}
+
+\setlist[itemize]{leftmargin=1.5em}
+\setlist[enumerate]{leftmargin=1.5em}
+\sloppy
+
+\title{\textbf{Final Report: GDELT Analysis Platform}}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This project develops an AI-driven event analysis platform for GDELT 2.0 North America 2024 data. The system combines a MySQL-backed spatio-temporal event database, a FastAPI service layer, a React visualization interface, semantic news retrieval through ChromaDB, and a Transformer-Hawkes Process forecasting module. Compared with the earlier checkpoint design, the final implementation no longer relies on the Model Context Protocol as the active execution path. The current main branch uses a LangChain-based hybrid planner: a local Ollama router extracts query structure, a rule-based fast path handles simple analytical requests, and a remote LLM generates natural language reports for complex analysis. Structured queries are executed through a shared SQL/DataService layer, while ChromaDB provides retrieval-augmented context for news-oriented questions. In the local final deployment, the trained THP checkpoint and training logs are stored as model artifacts and can be loaded by the FastAPI forecast service.
+
+The final platform supports three main user workflows: AI Explore for natural language analysis, Dashboard for interactive event visualization, and Forecast for short-term event risk prediction. Database performance is improved through precomputed summary tables such as \texttt{daily\_summary}, \texttt{event\_fingerprints}, \texttt{region\_daily\_stats}, and \texttt{geo\_heatmap\_grid}. The forecasting module uses a compact neural Transformer-Hawkes model architecture that reads daily historical event sequences and predicts seven-day event intensity with uncertainty intervals. Together, these components transform raw GDELT records into a practical system for spatio-temporal exploration, quantitative forecasting, and narrative event analysis.
+\end{abstract}
+
+\section{Introduction}
+
+Large-scale event datasets such as GDELT contain rich information about global conflict, cooperation, actors, locations, media attention, and sentiment. However, raw event records are difficult to explore directly because meaningful analysis usually requires filtering by time, geography, actor names, event codes, and media context. Analysts must often write many SQL queries manually before they can form a coherent understanding of what happened, where it happened, and how it changed over time.
+
+The goal of this project is to build an interactive analysis platform that makes GDELT data easier to query, visualize, and explain. The project focuses on North American events in 2024, especially events associated with the United States, Canada, and Mexico. The final platform provides a web interface where users can inspect dashboard summaries, ask natural language questions, drill down into representative events, and generate short-term event forecasts.
+
+The major architectural change from the checkpoint report is the replacement of the active MCP-centered agent design with a LangChain-based hybrid routing pipeline. In the current main branch, \texttt{mcp\_server/} remains as a legacy, currently unused directory. The production path uses FastAPI endpoints, a shared SQL query layer, and LangChain \texttt{ChatOpenAI} integration for LLM providers such as Kimi, Moonshot, OpenAI, or Claude. This change simplifies the system, reduces tool-calling overhead, and makes the frontend/backend integration more direct.
+
+\section{Related Work}
+
+This project builds on prior work in event data management, geopolitical risk analysis, retrieval-augmented generation, and temporal event forecasting. GDELT provides structured event records based on actors, actions, locations, CAMEO event codes, Goldstein scores, and media tone. These features are widely used to study conflict and cooperation patterns at large scale.
+
+Traditional database systems are effective for structured retrieval, aggregation, and indexing, but they do not automatically explain trends in natural language. LLM-based systems address this limitation by translating user intent into analytical plans and summaries. However, LLMs alone are not reliable numerical forecasters because they are not trained to model event-count time series directly. For this reason, the project combines an LLM analysis layer with a dedicated Transformer-Hawkes forecasting service.
+
+The forecasting component is inspired by temporal point-process and Hawkes-process modeling. Hawkes processes are useful for event streams because they represent self-excitation: a spike in events can increase short-term future intensity before decaying. The final model extends this idea with a Transformer encoder, allowing the system to learn which previous days in the historical window matter most for the next seven days.
+
+\section{Final System Architecture}
+
+The final system follows a modular architecture with four primary layers: data storage, query services, intelligence services, and frontend presentation.
+
+\subsection{Data Layer}
+
+The main data store is MySQL 8.0+, containing GDELT event records in \texttt{events\_table}. Important fields include \texttt{SQLDATE}, \texttt{Actor1Name}, \texttt{Actor2Name}, \texttt{EventCode}, \texttt{EventRootCode}, \texttt{QuadClass}, \texttt{GoldsteinScale}, \texttt{AvgTone}, \texttt{NumArticles}, and geographic fields such as \texttt{ActionGeo\_Lat}, \texttt{ActionGeo\_Long}, and \texttt{ActionGeo\_FullName}.
+
+To support fast dashboard and map queries, the project includes precomputed tables:
+
+\begin{itemize}
+    \item \texttt{daily\_summary}: daily totals, conflict/cooperation counts, sentiment, top actors, top locations, and hot event fingerprints.
+    \item \texttt{event\_fingerprints}: enriched event-level records with headline, summary, event type label, and severity score.
+    \item \texttt{region\_daily\_stats}: per-region daily aggregation.
+    \item \texttt{geo\_heatmap\_grid}: pre-aggregated geographic grid cells for fast map rendering.
+\end{itemize}
+
+The database scripts also include index creation, search indexes, spatial index preparation, ETL backfill scripts, and database status checks. These components move expensive aggregation work out of real-time API calls.
+
+\subsection{Backend Service Layer}
+
+The backend is implemented with FastAPI. Its main responsibilities are exposing REST endpoints, managing asynchronous MySQL access, validating request/response schemas with Pydantic, and coordinating data retrieval through \texttt{DataService}.
+
+The shared SQL layer in \texttt{backend/queries/core\_queries.py} is the single source of truth for analytical queries. Dashboard, map, time-series, event search, event detail, semantic news search, and THP forecasting all rely on this shared query layer rather than duplicating SQL logic across services.
+
+Key API groups include:
+
+\begin{itemize}
+    \item \texttt{/api/v1/data/dashboard}: dashboard summary metrics.
+    \item \texttt{/api/v1/data/timeseries}: daily event and conflict/cooperation trends.
+    \item \texttt{/api/v1/data/geo}: geographic heatmap data.
+    \item \texttt{/api/v1/data/events}: filtered event search.
+    \item \texttt{/api/v1/data/geo/events}: hotspot drilldown events.
+    \item \texttt{/api/v1/data/forecast}: Transformer-Hawkes risk forecast.
+    \item \texttt{/api/v1/analyze/analyze}: AI planner and executor.
+    \item \texttt{/api/v1/analyze/report}: LLM-generated analytical report.
+    \item \texttt{/api/v1/analyze/event-report}: enhanced event report with storyline, news, and optional GKG context.
+\end{itemize}
+
+\subsection{Intelligence Layer}
+
+The active intelligence layer is LangChain-based rather than MCP-based. The planner combines three mechanisms:
+
+\begin{itemize}
+    \item Local Ollama router using \texttt{qwen2.5:3b} to extract location, date range, event type, query text, and intent category.
+    \item Rule-based fast path for simple queries where the system can directly call dashboard, time-series, map, or event-search endpoints without a remote LLM.
+    \item Remote LLM report generation through LangChain \texttt{ChatOpenAI} for complex queries requiring comparison, synthesis, or explanation.
+\end{itemize}
+
+This design separates structured retrieval from narrative generation. The database layer returns grounded JSON results first; the LLM then summarizes those results into readable analysis. This reduces hallucination risk because the report generator is prompted to explain retrieved data instead of inventing facts.
+
+\subsection{RAG and News Context}
+
+The project includes a semantic news search pipeline using ChromaDB and Sentence-Transformers. Event summaries and article snippets are embedded with \texttt{all-MiniLM-L6-v2} and stored in a persistent ChromaDB collection named \texttt{gdelt\_news\_collection}. When a query requires news context, the backend performs vector similarity search and returns relevant event IDs, dates, source URLs, and content snippets.
+
+This RAG component complements the structured SQL layer. SQL is used for precise filtering by date, actor, event type, and geography, while ChromaDB is used for semantic matching when the user asks open-ended questions about topics, themes, or narratives.
+
+\subsection{Frontend Layer}
+
+The frontend is implemented with React, TypeScript, Vite, ECharts, and Leaflet. It provides three major tabs:
+
+\begin{itemize}
+    \item AI Explore: natural language query interface with planner output and generated reports.
+    \item Forecast: Transformer-Hawkes event risk forecasting workspace.
+    \item Dashboard: interactive event visualization with KPI cards, time-series charts, geographic heatmap, filters, top actors, representative events, and hotspot drilldown.
+\end{itemize}
+
+The Dashboard tab focuses on historical exploration. The Forecast tab is separated from Dashboard so that forecasting controls and output do not duplicate dashboard visualizations. This improves page responsibility and reduces unnecessary loading.
+
+\section{Database Design and Optimization}
+
+The database design emphasizes fast analytical retrieval over raw storage alone. The original GDELT event data is stored in a normalized event table, while derived tables provide frequently used aggregations.
+
+The \texttt{daily\_summary} table is central to performance. Instead of grouping millions of rows every time the dashboard loads, the backend first checks for daily precomputed rows and uses them for summary cards and time-series metrics. The README describes the dashboard target as sub-200ms response time when these summary tables are populated.
+
+The map view uses \texttt{geo\_heatmap\_grid}, which aggregates events into geographic cells. This reduces the cost of repeatedly scanning raw latitude/longitude rows and enables fast rendering of conflict/cooperation hotspots in Leaflet. Spatial index scripts are also included for geographic queries after coordinates and SRID values are cleaned.
+
+The \texttt{event\_fingerprints} table provides a bridge between raw event records and user-facing explanations. It stores concise labels, summaries, severity scores, and fingerprints that make event search and representative-event display more readable than raw GDELT rows alone.
+
+\section{AI Explore Pipeline}
+
+The AI Explore workflow begins when a user enters a natural language question. The local router first extracts structured context such as date range, location, event type, and intent. If the query is simple, the rule-based fast path directly retrieves data through the DataService. If the query requires reasoning or comparison, the planner creates a query plan and the backend executes the necessary steps.
+
+The system uses a two-stage report design:
+
+\begin{enumerate}
+    \item The planner and executor return grounded data and visualization plans.
+    \item The report generator lazily converts those results into natural language.
+\end{enumerate}
+
+This design keeps the interface responsive because the frontend can display retrieved data before waiting for the full LLM narrative. It also makes debugging easier because the returned data, plan, and report are separate.
+
+For event-specific analysis, the enhanced report endpoint can include an executive summary, event storyline, actor activity overview, GKG insights, and news coverage. Optional BigQuery-based GKG and Mentions queries can be enabled for deeper media-context analysis while preserving cost controls.
+
+\section{Transformer-Hawkes Forecasting Module}
+
+The final project includes a Transformer-Hawkes Process forecasting module for seven-day event risk prediction. The backend endpoint is \texttt{/api/v1/data/forecast}, and the frontend exposes it through the Forecast tab.
+
+The forecast service loads a historical daily sequence for the selected target and event type. Targets may be based on location/country, actor, country pair, or actor pair depending on the request parameters and normalization logic. Supported event types include all events, conflict, cooperation, and protest.
+
+The neural model uses:
+
+\begin{itemize}
+    \item A 30-day sequence length by default.
+    \item Sixteen daily features, including event count, conflict ratio, cooperation ratio, Goldstein score, media tone, article volume, calendar features, and rolling statistics.
+    \item Series embeddings for target identity.
+    \item Event-type embeddings for multitask forecasting.
+    \item Series-group embeddings for global, country, actor, country-pair, actor-pair, event-root, and event-code groups.
+    \item A Transformer encoder with attention pooling.
+    \item A Hawkes-style head that models baseline intensity, excitation, and exponential decay.
+    \item A direct multi-horizon head for seven-day forecasts.
+\end{itemize}
+
+The training script \texttt{db\_scripts/train\_thp\_model.py} supports GPU training, mixed precision, \texttt{torch.compile}, early stopping, hyperparameter search, dataset caching, per-category evaluation, rolling-origin backtesting, and baseline comparison against naive, moving average, and empirical Hawkes baselines.
+
+The FastAPI service attempts to load a checkpoint from \texttt{THP\_CHECKPOINT\_PATH}, defaulting to \texttt{models/thp\_gdelt.pt}. In the local final environment, the trained checkpoint exists at \texttt{models/thp\_gdelt.pt}, with training logs stored under \texttt{models/training\_logs/}. The final local checkpoint metadata identifies the model version as \texttt{thp\_v5\_series\_event\_normalized+calibrated}, uses CUDA mixed-precision training, supports a seven-day forecast horizon, and contains 736 target series across all, conflict, cooperation, and protest event types.
+
+Although the local environment contains these model artifacts, the GitHub main branch does not necessarily track generated model weights, training caches, or training logs. This is intentional because those files are environment-specific artifacts. When the checkpoint is present, the forecast service uses the trained neural model. If it is missing, the service falls back to an empirical Transformer-Hawkes style forecast so the API contract remains usable.
+
+The Forecast page displays:
+
+\begin{itemize}
+    \item Recent historical trend and seven-day forecast.
+    \item Expected/median event count.
+    \item Low and high uncertainty interval.
+    \item Peak forecast day.
+    \item Model/checkpoint metadata when available.
+    \item Source indicators showing whether the neural checkpoint was loaded.
+\end{itemize}
+
+\section{Evaluation Strategy}
+
+The current training script evaluates the THP model on held-out historical windows. It reports standard regression metrics:
+
+\begin{itemize}
+    \item MAE: average absolute forecast error.
+    \item RMSE: square-rooted mean squared error, which penalizes large errors more strongly.
+    \item MAPE: percentage error where applicable.
+\end{itemize}
+
+It also compares the neural THP model against baselines:
+
+\begin{itemize}
+    \item Naive last-value baseline.
+    \item Seven-day moving average baseline.
+    \item Empirical Hawkes baseline.
+\end{itemize}
+
+The checkpoint metadata can store evaluation results, baseline improvement, per-category evaluation, residual calibration, and rolling-origin backtest statistics. This allows the Forecast page and backend to explain not only a prediction, but also how the model performed during historical validation.
+
+In the local final checkpoint, the neural THP model reports an MAE of approximately 83.77. Compared with the seven-day moving average baseline MAE of approximately 167.74, this is about a 50.06\% MAE reduction. The same checkpoint also reports improvements over the naive last-value baseline and the empirical Hawkes baseline. These results indicate that the trained neural model provides a substantially more accurate short-term forecast than simple historical baselines on the held-out validation windows.
+
+For final deployment, model evaluation should be interpreted by target category. Global event counts are much larger and easier to stabilize, while narrow actor-pair or rare protest series are usually harder to predict. Therefore, global MAE and target-specific MAE should not be compared as if they had the same scale.
+
+\section{User Interface and Visualization}
+
+The Dashboard provides the historical data exploration layer. It includes:
+
+\begin{itemize}
+    \item Total events, unique actors, total articles, and average Goldstein score.
+    \item Daily event count and conflict/cooperation trend charts.
+    \item Geographic heatmap with conflict/cooperation coloring.
+    \item Map hotspot drilldown for location-specific event examples.
+    \item Top actors and representative events.
+    \item Search and filter controls for date, location, actor, and event type.
+    \item Markdown report export.
+\end{itemize}
+
+The Forecast workspace is dedicated to future-looking analysis. It asks the user for a single forecast start date, a focus mode, a target, and an event type. It then loads the prior historical window and predicts the next seven days. This separation prevents Dashboard and Forecast from overlapping responsibilities.
+
+The AI Explore tab provides the natural language interface. It is intended for questions such as comparing conflict and cooperation trends, summarizing regional events, asking for important events on a date, or requesting media-context explanations.
+
+\section{Implementation Results}
+
+Compared with the earlier checkpoint version, the final implementation makes several important improvements:
+
+\begin{itemize}
+    \item The active architecture shifted from MCP-based tool execution to a LangChain-based hybrid planner with direct FastAPI/DataService queries.
+    \item The React frontend was expanded from a basic chat-like interface into a three-tab analysis platform.
+    \item Dashboard performance was improved through precomputed database tables and optimized query paths.
+    \item ChromaDB was added for semantic news retrieval and RAG-style context enrichment.
+    \item Event storyline and enhanced event report endpoints were added for deeper narrative analysis.
+    \item A Transformer-Hawkes forecasting module was added for seven-day event risk prediction.
+    \item A local final THP checkpoint and training logs were produced, with the checkpoint loaded by the FastAPI forecast service through \texttt{models/thp\_gdelt.pt}.
+    \item The THP training pipeline was expanded with multitask event types, target embeddings, rolling features, baseline comparison, per-category evaluation, and GPU-capable training options.
+    \item The system supports multiple LLM providers through LangChain using OpenAI-compatible API configuration.
+\end{itemize}
+
+These changes move the project from a proof-of-concept agent architecture toward a complete analytical application with structured retrieval, semantic context, forecasting, and visualization.
+
+\section{Limitations and Future Work}
+
+The current system still has several limitations. First, the quality of forecasts depends on the availability of a trained THP checkpoint and sufficient historical data. The local final environment includes the checkpoint, but a fresh clone must either receive the model artifact or retrain the model before reproducing the same neural forecast behavior. If the checkpoint is missing, the backend falls back to the empirical forecaster. Second, narrow actor-pair or rare-event queries may have limited training samples, making their forecasts less stable than global or country-level forecasts. Third, ChromaDB search requires a built vector knowledge base; if \texttt{chroma\_db/} has not been generated, semantic news search will not return results.
+
+The system also relies on external LLM APIs for complex narrative generation unless a local model is configured. This introduces latency, cost, and API-key setup requirements. Optional BigQuery GKG and Mentions enrichment can improve event context, but it also requires Google Cloud configuration and cost controls.
+
+Future work could include automated model artifact management, scheduled incremental updates for precomputed tables and ChromaDB, richer uncertainty calibration for THP predictions, more robust actor normalization, and a clearer deployment workflow for users who do not already have the local Docker database.
+
+\section{Conclusion}
+
+The final GDELT Analysis Platform integrates database systems, LLM-based analysis, vector retrieval, interactive visualization, and neural temporal forecasting. The project began with an MCP-centered design, but the current main branch uses a more direct LangChain-based hybrid architecture. FastAPI and the shared SQL layer provide grounded data access, ChromaDB adds semantic news context, and the Transformer-Hawkes module provides short-term quantitative forecasts.
+
+The resulting system allows users to move from raw event records to dashboards, natural language explanations, event storylines, and forecasted event risk. This makes the platform useful not only as a database project, but also as a practical example of combining structured data management with modern AI-assisted analysis.
+
+\begin{thebibliography}{9}
+
+\bibitem{gdelt}
+The GDELT Project.
+\newblock GDELT 2.0 Event Database.
+\newblock \url{https://www.gdeltproject.org/}
+
+\bibitem{repo}
+SolomonGao.
+\newblock DBMSproject GitHub Repository, main branch.
+\newblock \url{https://github.com/SolomonGao/DBMSproject/tree/main}
+
+\bibitem{langchain}
+LangChain.
+\newblock LangChain Documentation.
+\newblock \url{https://python.langchain.com/}
+
+\bibitem{chroma}
+ChromaDB.
+\newblock ChromaDB Documentation.
+\newblock \url{https://docs.trychroma.com/}
+
+\bibitem{hawkes}
+A. G. Hawkes.
+\newblock Spectra of Some Self-Exciting and Mutually Exciting Point Processes.
+\newblock \emph{Biometrika}, 1971.
+
+\end{thebibliography}
+
+\end{document}

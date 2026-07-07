@@ -1,0 +1,686 @@
+[GDELT] Server Starting...
+[GDELT] Transport: sse
+[GDELT] SSE Server: http://localhost:8000/sse
+
+
++-----------------------------------------------------------------------------+
+|                                                                             |
+|                                                                             |
+|                        �{\u2580\u2580 �{\u2580�� ��\u2580\u2580 \u2580��\u2580 ��\u2580�{\u2580�� ��\u2580\u2580 ��\u2580��                        |
+|                        ��\u2580  ��\u2580�� �{�{��  ��  �� \u2580 �� ���{�{ ��\u2580\u2580                        |
+|                                                                             |
+|                                                                             |
+|                                FastMCP 3.2.0                                |
+|                            https://gofastmcp.com                            |
+|                                                                             |
+|                 \U0001f5a5  Server:      gdelt-server, 3.2.0                         |
+|                 \U0001f680 Deploy free: https://horizon.prefect.io                  |
+|                                                                             |
++-----------------------------------------------------------------------------+
++-----------------------------------------------------------------------------+
+|                         \U0001f389 Update available: 3.2.4                          |
+|                     Run: pip install --upgrade fastmcp                      |
++-----------------------------------------------------------------------------+
+
+
+[GDELT] Initializing MCP Server...
+[GDELT] Database connection pool initialized
+[GDELT] Database health check passed (latency: 54.81ms)
+[GDELT] MCP Server ready
+[04/14/26 21:10:26] INFO     Starting MCP server               transport.py:299
+                             'gdelt-server' with transport                     
+                             'sse' on                                          
+                             http://127.0.0.1:8000/sse                         
+INFO:     Started server process [21840]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:62222 - "GET /sse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62225 - "POST /messages/?session_id=cb31031ac37d43cdb34c176f4f7c5087 HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:62225 - "POST /messages/?session_id=cb31031ac37d43cdb34c176f4f7c5087 HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:62225 - "POST /messages/?session_id=cb31031ac37d43cdb34c176f4f7c5087 HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:62225 - "POST /messages/?session_id=cb31031ac37d43cdb34c176f4f7c5087 HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:62246 - "POST /messages/?session_id=cb31031ac37d43cdb34c176f4f7c5087 HTTP/1.1" 202 Accepted
+[04/14/26 21:10:58] Error calling tool 'execute_sql'                           
+                    +----------- Traceback (most recent call last) -----------+
+                    | E:\DBMSproject-latest\mcp_server\app\database\pool.py:2 |
+                    | 19 in _execute_with_retry                               |
+                    |                                                         |
+                    |   216     async def _execute_with_retry(self, operation |
+                    |       "operation") -> Any:                              |
+                    |   217         if self._backend == "duckdb":             |
+                    |   218             try:                                  |
+                    | > 219                 return await operation()          |
+                    |   220             except Exception as exc:              |
+                    |   221                 raise DatabaseError(f"DuckDB {ope |
+                    |   222                                                   |
+                    |                                                         |
+                    | E:\DBMSproject-latest\mcp_server\app\database\pool.py:3 |
+                    | 28 in _do_fetch                                         |
+                    |                                                         |
+                    |   325         async def _do_fetch():                    |
+                    |   326             if self._backend == "duckdb":         |
+                    |   327                 async with self._duckdb_query_loc |
+                    | > 328                     return await asyncio.to_threa |
+                    |       params, "all")                                    |
+                    |   329                                                   |
+                    |   330             async with self.acquire() as conn:    |
+                    |   331                 async with conn.cursor(aiomysql.D |
+                    |                                                         |
+                    |                 ... 2 frames hidden ...                 |
+                    |                                                         |
+                    | C:\Users\dgaz5\AppData\Local\Programs\Python\Python314\ |
+                    | Lib\concurrent\futures\thread.py:73 in run              |
+                    |                                                         |
+                    |    70                                                   |
+                    |    71     def run(self, task):                          |
+                    |    72         fn, args, kwargs = task                   |
+                    | >  73         return fn(*args, **kwargs)                |
+                    |    74                                                   |
+                    |    75                                                   |
+                    |    76 class _WorkItem:                                  |
+                    |                                                         |
+                    | E:\DBMSproject-latest\mcp_server\app\database\pool.py:3 |
+                    | 10 in _run_duckdb_query                                 |
+                    |                                                         |
+                    |   307                                                   |
+                    |   308         conn = duckdb.connect(str(self._duckdb_pa |
+                    |   309         try:                                      |
+                    | > 310             cursor = conn.execute(_normalize_duck |
+                    |   311             if fetch == "all":                    |
+                    |   312                 return _rows_to_dicts(cursor.desc |
+                    |   313             if fetch == "one":                    |
+                    +---------------------------------------------------------+
+                    BinderException: Binder Error: Referenced column           
+                    "Actor1Geo_CountryCode" not found in FROM clause!          
+                    Candidate bindings: "ActionGeo_CountryCode",               
+                    "Actor1CountryCode", "Actor2CountryCode",                  
+                    "Actor1Type1Code", "Actor2Type1Code"                       
+                                                                               
+                    LINE 12:         OR (Actor1Geo_CountryCode = 'US' AND      
+                    Actor2Geo_CountryCode ...                                  
+                                         ^                                     
+                                                                               
+                    The above exception was the direct cause of the following  
+                    exception:                                                 
+                                                                               
+                    +----------- Traceback (most recent call last) -----------+
+                    | C:\Users\dgaz5\AppData\Local\Programs\Python\Python314\ |
+                    | Lib\site-packages\fastmcp\server\server.py:1162 in      |
+                    | call_tool                                               |
+                    |                                                         |
+                    | C:\Users\dgaz5\AppData\Local\Programs\Python\Python314\ |
+                    | Lib\site-packages\fastmcp\tools\base.py:373 in _run     |
+                    |                                                         |
+                    |                 ... 4 frames hidden ...                 |
+                    |                                                         |
+                    | E:\DBMSproject-latest\mcp_server\app\database\pool.py:3 |
+                    | 35 in fetchall                                          |
+                    |                                                         |
+                    |   332                     await cur.execute(query, para |
+                    |   333                     return await cur.fetchall()   |
+                    |   334                                                   |
+                    | > 335         return await self._execute_with_retry(_do |
+                    |   336                                                   |
+                    |   337     async def fetchone(self, query: str, params:  |
+                    |       Optional[Dict[str, Any]]:                         |
+                    |   338         async def _do_fetch():                    |
+                    |                                                         |
+                    | E:\DBMSproject-latest\mcp_server\app\database\pool.py:2 |
+                    | 21 in _execute_with_retry                               |
+                    |                                                         |
+                    |   218             try:                                  |
+                    |   219                 return await operation()          |
+                    |   220             except Exception as exc:              |
+                    | > 221                 raise DatabaseError(f"DuckDB {ope |
+                    |   222                                                   |
+                    |   223         last_error = None                         |
+                    |   224         for attempt in range(1, self.MAX_RETRIES  |
+                    +---------------------------------------------------------+
+                    DatabaseError: DuckDB fetchall failed: Binder Error:       
+                    Referenced column "Actor1Geo_CountryCode" not found in FROM
+                    clause!                                                    
+                    Candidate bindings: "ActionGeo_CountryCode",               
+                    "Actor1CountryCode", "Actor2CountryCode",                  
+                    "Actor1Type1Code", "Actor2Type1Code"                       
+                                                                               
+                    LINE 12:         OR (Actor1Geo_CountryCode = 'US' AND      
+                    Actor2Geo_CountryCode ...                                  
+                                         ^                                     
+INFO:     127.0.0.1:62253 - "POST /messages/?session_id=cb31031ac37d43cdb34c176f4f7c5087 HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:62260 - "POST /messages/?session_id=cb31031ac37d43cdb34c176f4f7c5087 HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:57430 - "GET /sse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57432 - "POST /messages/?session_id=badb80bb4302414fa06d1afc5ac72a02 HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:57432 - "POST /messages/?session_id=badb80bb4302414fa06d1afc5ac72a02 HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:57432 - "POST /messages/?session_id=badb80bb4302414fa06d1afc5ac72a02 HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:57432 - "POST /messages/?session_id=badb80bb4302414fa06d1afc5ac72a02 HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:57442 - "POST /messages/?session_id=badb80bb4302414fa06d1afc5ac72a02 HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:57461 - "POST /messages/?session_id=badb80bb4302414fa06d1afc5ac72a02 HTTP/1.1" 202 Accepted
+[04/14/26 21:20:13] Error calling tool 'execute_sql'                           
+                    +----------- Traceback (most recent call last) -----------+
+                    | E:\DBMSproject-latest\mcp_server\app\database\pool.py:2 |
+                    | 19 in _execute_with_retry                               |
+                    |                                                         |
+                    |   216     async def _execute_with_retry(self, operation |
+                    |       "operation") -> Any:                              |
+                    |   217         if self._backend == "duckdb":             |
+                    |   218             try:                                  |
+                    | > 219                 return await operation()          |
+                    |   220             except Exception as exc:              |
+                    |   221                 raise DatabaseError(f"DuckDB {ope |
+                    |   222                                                   |
+                    |                                                         |
+                    | E:\DBMSproject-latest\mcp_server\app\database\pool.py:3 |
+                    | 28 in _do_fetch                                         |
+                    |                                                         |
+                    |   325         async def _do_fetch():                    |
+                    |   326             if self._backend == "duckdb":         |
+                    |   327                 async with self._duckdb_query_loc |
+                    | > 328                     return await asyncio.to_threa |
+                    |       params, "all")                                    |
+                    |   329                                                   |
+                    |   330             async with self.acquire() as conn:    |
+                    |   331                 async with conn.cursor(aiomysql.D |
+                    |                                                         |
+                    |                 ... 2 frames hidden ...                 |
+                    |                                                         |
+                    | C:\Users\dgaz5\AppData\Local\Programs\Python\Python314\ |
+                    | Lib\concurrent\futures\thread.py:73 in run              |
+                    |                                                         |
+                    |    70                                                   |
+                    |    71     def run(self, task):                          |
+                    |    72         fn, args, kwargs = task                   |
+                    | >  73         return fn(*args, **kwargs)                |
+                    |    74                                                   |
+                    |    75                                                   |
+                    |    76 class _WorkItem:                                  |
+                    |                                                         |
+                    | E:\DBMSproject-latest\mcp_server\app\database\pool.py:3 |
+                    | 10 in _run_duckdb_query                                 |
+                    |                                                         |
+                    |   307                                                   |
+                    |   308         conn = duckdb.connect(str(self._duckdb_pa |
+                    |   309         try:                                      |
+                    | > 310             cursor = conn.execute(_normalize_duck |
+                    |   311             if fetch == "all":                    |
+                    |   312                 return _rows_to_dicts(cursor.desc |
+                    |   313             if fetch == "one":                    |
+                    +---------------------------------------------------------+
+                    CatalogException: Catalog Error: Scalar Function with name 
+                    date_format does not exist!                                
+                    Did you mean "date_part"?                                  
+                                                                               
+                    LINE 15: GROUP BY DATE_FORMAT(SQLDATE, '%Y-%m')            
+                                      ^                                        
+                                                                               
+                    The above exception was the direct cause of the following  
+                    exception:                                                 
+                                                                               
+                    +----------- Traceback (most recent call last) -----------+
+                    | C:\Users\dgaz5\AppData\Local\Programs\Python\Python314\ |
+                    | Lib\site-packages\fastmcp\server\server.py:1162 in      |
+                    | call_tool                                               |
+                    |                                                         |
+                    | C:\Users\dgaz5\AppData\Local\Programs\Python\Python314\ |
+                    | Lib\site-packages\fastmcp\tools\base.py:373 in _run     |
+                    |                                                         |
+                    |                 ... 4 frames hidden ...                 |
+                    |                                                         |
+                    | E:\DBMSproject-latest\mcp_server\app\database\pool.py:3 |
+                    | 35 in fetchall                                          |
+                    |                                                         |
+                    |   332                     await cur.execute(query, para |
+                    |   333                     return await cur.fetchall()   |
+                    |   334                                                   |
+                    | > 335         return await self._execute_with_retry(_do |
+                    |   336                                                   |
+                    |   337     async def fetchone(self, query: str, params:  |
+                    |       Optional[Dict[str, Any]]:                         |
+                    |   338         async def _do_fetch():                    |
+                    |                                                         |
+                    | E:\DBMSproject-latest\mcp_server\app\database\pool.py:2 |
+                    | 21 in _execute_with_retry                               |
+                    |                                                         |
+                    |   218             try:                                  |
+                    |   219                 return await operation()          |
+                    |   220             except Exception as exc:              |
+                    | > 221                 raise DatabaseError(f"DuckDB {ope |
+                    |   222                                                   |
+                    |   223         last_error = None                         |
+                    |   224         for attempt in range(1, self.MAX_RETRIES  |
+                    +---------------------------------------------------------+
+                    DatabaseError: DuckDB fetchall failed: Catalog Error:      
+                    Scalar Function with name date_format does not exist!      
+                    Did you mean "date_part"?                                  
+                                                                               
+                    LINE 15: GROUP BY DATE_FORMAT(SQLDATE, '%Y-%m')            
+                                      ^                                        
+INFO:     127.0.0.1:57468 - "POST /messages/?session_id=badb80bb4302414fa06d1afc5ac72a02 HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:56719 - "GET /sse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56722 - "POST /messages/?session_id=164713d6c9284feea763234e2a3d1b39 HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:56722 - "POST /messages/?session_id=164713d6c9284feea763234e2a3d1b39 HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:56722 - "POST /messages/?session_id=164713d6c9284feea763234e2a3d1b39 HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:56728 - "POST /messages/?session_id=164713d6c9284feea763234e2a3d1b39 HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:62223 - "GET /sse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62225 - "POST /messages/?session_id=d883646982f14ab99a0720bc7da6892a HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:62225 - "POST /messages/?session_id=d883646982f14ab99a0720bc7da6892a HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:62225 - "POST /messages/?session_id=d883646982f14ab99a0720bc7da6892a HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:62225 - "POST /messages/?session_id=d883646982f14ab99a0720bc7da6892a HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:53974 - "POST /messages/?session_id=d883646982f14ab99a0720bc7da6892a HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:52220 - "POST /messages/?session_id=d883646982f14ab99a0720bc7da6892a HTTP/1.1" 202 Accepted
+[04/14/26 21:38:06] Error calling tool 'execute_sql'                           
+                    +----------- Traceback (most recent call last) -----------+
+                    | E:\DBMSproject-latest\mcp_server\app\database\pool.py:2 |
+                    | 19 in _execute_with_retry                               |
+                    |                                                         |
+                    |   216     async def _execute_with_retry(self, operation |
+                    |       "operation") -> Any:                              |
+                    |   217         if self._backend == "duckdb":             |
+                    |   218             try:                                  |
+                    | > 219                 return await operation()          |
+                    |   220             except Exception as exc:              |
+                    |   221                 raise DatabaseError(f"DuckDB {ope |
+                    |   222                                                   |
+                    |                                                         |
+                    | E:\DBMSproject-latest\mcp_server\app\database\pool.py:3 |
+                    | 28 in _do_fetch                                         |
+                    |                                                         |
+                    |   325         async def _do_fetch():                    |
+                    |   326             if self._backend == "duckdb":         |
+                    |   327                 async with self._duckdb_query_loc |
+                    | > 328                     return await asyncio.to_threa |
+                    |       params, "all")                                    |
+                    |   329                                                   |
+                    |   330             async with self.acquire() as conn:    |
+                    |   331                 async with conn.cursor(aiomysql.D |
+                    |                                                         |
+                    |                 ... 2 frames hidden ...                 |
+                    |                                                         |
+                    | C:\Users\dgaz5\AppData\Local\Programs\Python\Python314\ |
+                    | Lib\concurrent\futures\thread.py:73 in run              |
+                    |                                                         |
+                    |    70                                                   |
+                    |    71     def run(self, task):                          |
+                    |    72         fn, args, kwargs = task                   |
+                    | >  73         return fn(*args, **kwargs)                |
+                    |    74                                                   |
+                    |    75                                                   |
+                    |    76 class _WorkItem:                                  |
+                    |                                                         |
+                    | E:\DBMSproject-latest\mcp_server\app\database\pool.py:3 |
+                    | 10 in _run_duckdb_query                                 |
+                    |                                                         |
+                    |   307                                                   |
+                    |   308         conn = duckdb.connect(str(self._duckdb_pa |
+                    |   309         try:                                      |
+                    | > 310             cursor = conn.execute(_normalize_duck |
+                    |   311             if fetch == "all":                    |
+                    |   312                 return _rows_to_dicts(cursor.desc |
+                    |   313             if fetch == "one":                    |
+                    +---------------------------------------------------------+
+                    CatalogException: Catalog Error: Scalar Function with name 
+                    date_format does not exist!                                
+                    Did you mean "date_part"?                                  
+                                                                               
+                    LINE 14: GROUP BY DATE_FORMAT(SQLDATE, '%Y-%m')            
+                                      ^                                        
+                                                                               
+                    The above exception was the direct cause of the following  
+                    exception:                                                 
+                                                                               
+                    +----------- Traceback (most recent call last) -----------+
+                    | C:\Users\dgaz5\AppData\Local\Programs\Python\Python314\ |
+                    | Lib\site-packages\fastmcp\server\server.py:1162 in      |
+                    | call_tool                                               |
+                    |                                                         |
+                    | C:\Users\dgaz5\AppData\Local\Programs\Python\Python314\ |
+                    | Lib\site-packages\fastmcp\tools\base.py:373 in _run     |
+                    |                                                         |
+                    |                 ... 4 frames hidden ...                 |
+                    |                                                         |
+                    | E:\DBMSproject-latest\mcp_server\app\database\pool.py:3 |
+                    | 35 in fetchall                                          |
+                    |                                                         |
+                    |   332                     await cur.execute(query, para |
+                    |   333                     return await cur.fetchall()   |
+                    |   334                                                   |
+                    | > 335         return await self._execute_with_retry(_do |
+                    |   336                                                   |
+                    |   337     async def fetchone(self, query: str, params:  |
+                    |       Optional[Dict[str, Any]]:                         |
+                    |   338         async def _do_fetch():                    |
+                    |                                                         |
+                    | E:\DBMSproject-latest\mcp_server\app\database\pool.py:2 |
+                    | 21 in _execute_with_retry                               |
+                    |                                                         |
+                    |   218             try:                                  |
+                    |   219                 return await operation()          |
+                    |   220             except Exception as exc:              |
+                    | > 221                 raise DatabaseError(f"DuckDB {ope |
+                    |   222                                                   |
+                    |   223         last_error = None                         |
+                    |   224         for attempt in range(1, self.MAX_RETRIES  |
+                    +---------------------------------------------------------+
+                    DatabaseError: DuckDB fetchall failed: Catalog Error:      
+                    Scalar Function with name date_format does not exist!      
+                    Did you mean "date_part"?                                  
+                                                                               
+                    LINE 14: GROUP BY DATE_FORMAT(SQLDATE, '%Y-%m')            
+                                      ^                                        
+INFO:     127.0.0.1:52239 - "POST /messages/?session_id=d883646982f14ab99a0720bc7da6892a HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:49536 - "GET /sse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49538 - "POST /messages/?session_id=f2f399fe16184edfbd48d04f333a2cbb HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:49538 - "POST /messages/?session_id=f2f399fe16184edfbd48d04f333a2cbb HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:49538 - "POST /messages/?session_id=f2f399fe16184edfbd48d04f333a2cbb HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:49546 - "POST /messages/?session_id=f2f399fe16184edfbd48d04f333a2cbb HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:49546 - "POST /messages/?session_id=f2f399fe16184edfbd48d04f333a2cbb HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:49546 - "POST /messages/?session_id=f2f399fe16184edfbd48d04f333a2cbb HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:49546 - "POST /messages/?session_id=f2f399fe16184edfbd48d04f333a2cbb HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:51195 - "POST /messages/?session_id=f2f399fe16184edfbd48d04f333a2cbb HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:51195 - "POST /messages/?session_id=f2f399fe16184edfbd48d04f333a2cbb HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:51195 - "POST /messages/?session_id=f2f399fe16184edfbd48d04f333a2cbb HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:51195 - "POST /messages/?session_id=f2f399fe16184edfbd48d04f333a2cbb HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:51227 - "POST /messages/?session_id=f2f399fe16184edfbd48d04f333a2cbb HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:51227 - "POST /messages/?session_id=f2f399fe16184edfbd48d04f333a2cbb HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:51227 - "POST /messages/?session_id=f2f399fe16184edfbd48d04f333a2cbb HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:51227 - "POST /messages/?session_id=f2f399fe16184edfbd48d04f333a2cbb HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:52235 - "POST /messages/?session_id=f2f399fe16184edfbd48d04f333a2cbb HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:52253 - "GET /sse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52260 - "POST /messages/?session_id=62a43e33e765455782f1e51ce24fa97d HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:52260 - "POST /messages/?session_id=62a43e33e765455782f1e51ce24fa97d HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:52260 - "POST /messages/?session_id=62a43e33e765455782f1e51ce24fa97d HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:52267 - "POST /messages/?session_id=62a43e33e765455782f1e51ce24fa97d HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:52267 - "POST /messages/?session_id=62a43e33e765455782f1e51ce24fa97d HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:52267 - "POST /messages/?session_id=62a43e33e765455782f1e51ce24fa97d HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:52267 - "POST /messages/?session_id=62a43e33e765455782f1e51ce24fa97d HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:52293 - "POST /messages/?session_id=62a43e33e765455782f1e51ce24fa97d HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:52293 - "POST /messages/?session_id=62a43e33e765455782f1e51ce24fa97d HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:52293 - "POST /messages/?session_id=62a43e33e765455782f1e51ce24fa97d HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:52293 - "POST /messages/?session_id=62a43e33e765455782f1e51ce24fa97d HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:52329 - "POST /messages/?session_id=62a43e33e765455782f1e51ce24fa97d HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:52329 - "POST /messages/?session_id=62a43e33e765455782f1e51ce24fa97d HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:52329 - "POST /messages/?session_id=62a43e33e765455782f1e51ce24fa97d HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:52329 - "POST /messages/?session_id=62a43e33e765455782f1e51ce24fa97d HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:52510 - "GET /sse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52512 - "POST /messages/?session_id=c9eca6d3e2004468beb54b16f18defad HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:52512 - "POST /messages/?session_id=c9eca6d3e2004468beb54b16f18defad HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:52512 - "POST /messages/?session_id=c9eca6d3e2004468beb54b16f18defad HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:52522 - "POST /messages/?session_id=c9eca6d3e2004468beb54b16f18defad HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:52522 - "POST /messages/?session_id=c9eca6d3e2004468beb54b16f18defad HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:52546 - "POST /messages/?session_id=c9eca6d3e2004468beb54b16f18defad HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:55728 - "POST /messages/?session_id=c9eca6d3e2004468beb54b16f18defad HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:55728 - "POST /messages/?session_id=c9eca6d3e2004468beb54b16f18defad HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:51117 - "GET /sse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51119 - "POST /messages/?session_id=6d47de0cbd4743b6b21976b100208d67 HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:51119 - "POST /messages/?session_id=6d47de0cbd4743b6b21976b100208d67 HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:51119 - "POST /messages/?session_id=6d47de0cbd4743b6b21976b100208d67 HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:51127 - "POST /messages/?session_id=6d47de0cbd4743b6b21976b100208d67 HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:51127 - "POST /messages/?session_id=6d47de0cbd4743b6b21976b100208d67 HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:51155 - "POST /messages/?session_id=6d47de0cbd4743b6b21976b100208d67 HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:51155 - "POST /messages/?session_id=6d47de0cbd4743b6b21976b100208d67 HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:51188 - "POST /messages/?session_id=6d47de0cbd4743b6b21976b100208d67 HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:51188 - "POST /messages/?session_id=6d47de0cbd4743b6b21976b100208d67 HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:62374 - "GET /sse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62376 - "POST /messages/?session_id=7e16dcf5abe44ae292cdaf35cd74d8e5 HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:62376 - "POST /messages/?session_id=7e16dcf5abe44ae292cdaf35cd74d8e5 HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:62376 - "POST /messages/?session_id=7e16dcf5abe44ae292cdaf35cd74d8e5 HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:62395 - "POST /messages/?session_id=7e16dcf5abe44ae292cdaf35cd74d8e5 HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:62395 - "POST /messages/?session_id=7e16dcf5abe44ae292cdaf35cd74d8e5 HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:60250 - "POST /messages/?session_id=7e16dcf5abe44ae292cdaf35cd74d8e5 HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:60250 - "POST /messages/?session_id=7e16dcf5abe44ae292cdaf35cd74d8e5 HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:56043 - "POST /messages/?session_id=7e16dcf5abe44ae292cdaf35cd74d8e5 HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:56043 - "POST /messages/?session_id=7e16dcf5abe44ae292cdaf35cd74d8e5 HTTP/1.1" 202 Accepted
+[04/14/26 21:58:45] Error calling tool 'execute_sql'                           
+                    +----------- Traceback (most recent call last) -----------+
+                    | E:\DBMSproject-latest\mcp_server\app\database\pool.py:2 |
+                    | 19 in _execute_with_retry                               |
+                    |                                                         |
+                    |   216     async def _execute_with_retry(self, operation |
+                    |       "operation") -> Any:                              |
+                    |   217         if self._backend == "duckdb":             |
+                    |   218             try:                                  |
+                    | > 219                 return await operation()          |
+                    |   220             except Exception as exc:              |
+                    |   221                 raise DatabaseError(f"DuckDB {ope |
+                    |   222                                                   |
+                    |                                                         |
+                    | E:\DBMSproject-latest\mcp_server\app\database\pool.py:3 |
+                    | 28 in _do_fetch                                         |
+                    |                                                         |
+                    |   325         async def _do_fetch():                    |
+                    |   326             if self._backend == "duckdb":         |
+                    |   327                 async with self._duckdb_query_loc |
+                    | > 328                     return await asyncio.to_threa |
+                    |       params, "all")                                    |
+                    |   329                                                   |
+                    |   330             async with self.acquire() as conn:    |
+                    |   331                 async with conn.cursor(aiomysql.D |
+                    |                                                         |
+                    |                 ... 2 frames hidden ...                 |
+                    |                                                         |
+                    | C:\Users\dgaz5\AppData\Local\Programs\Python\Python314\ |
+                    | Lib\concurrent\futures\thread.py:73 in run              |
+                    |                                                         |
+                    |    70                                                   |
+                    |    71     def run(self, task):                          |
+                    |    72         fn, args, kwargs = task                   |
+                    | >  73         return fn(*args, **kwargs)                |
+                    |    74                                                   |
+                    |    75                                                   |
+                    |    76 class _WorkItem:                                  |
+                    |                                                         |
+                    | E:\DBMSproject-latest\mcp_server\app\database\pool.py:3 |
+                    | 10 in _run_duckdb_query                                 |
+                    |                                                         |
+                    |   307                                                   |
+                    |   308         conn = duckdb.connect(str(self._duckdb_pa |
+                    |   309         try:                                      |
+                    | > 310             cursor = conn.execute(_normalize_duck |
+                    |   311             if fetch == "all":                    |
+                    |   312                 return _rows_to_dicts(cursor.desc |
+                    |   313             if fetch == "one":                    |
+                    +---------------------------------------------------------+
+                    CatalogException: Catalog Error: Scalar Function with name 
+                    date_format does not exist!                                
+                    Did you mean "date_part"?                                  
+                                                                               
+                    LINE 1: ...%' AND SQLDATE BETWEEN '2024-01-01' AND         
+                    '2024-12-31' GROUP BY DATE_FORMAT(SQLDATE, '%Y-%m') ORDER  
+                    BY Month                                                   
+                                                                               
+                                  ^                                            
+                                                                               
+                    The above exception was the direct cause of the following  
+                    exception:                                                 
+                                                                               
+                    +----------- Traceback (most recent call last) -----------+
+                    | C:\Users\dgaz5\AppData\Local\Programs\Python\Python314\ |
+                    | Lib\site-packages\fastmcp\server\server.py:1162 in      |
+                    | call_tool                                               |
+                    |                                                         |
+                    | C:\Users\dgaz5\AppData\Local\Programs\Python\Python314\ |
+                    | Lib\site-packages\fastmcp\tools\base.py:373 in _run     |
+                    |                                                         |
+                    |                 ... 4 frames hidden ...                 |
+                    |                                                         |
+                    | E:\DBMSproject-latest\mcp_server\app\database\pool.py:3 |
+                    | 35 in fetchall                                          |
+                    |                                                         |
+                    |   332                     await cur.execute(query, para |
+                    |   333                     return await cur.fetchall()   |
+                    |   334                                                   |
+                    | > 335         return await self._execute_with_retry(_do |
+                    |   336                                                   |
+                    |   337     async def fetchone(self, query: str, params:  |
+                    |       Optional[Dict[str, Any]]:                         |
+                    |   338         async def _do_fetch():                    |
+                    |                                                         |
+                    | E:\DBMSproject-latest\mcp_server\app\database\pool.py:2 |
+                    | 21 in _execute_with_retry                               |
+                    |                                                         |
+                    |   218             try:                                  |
+                    |   219                 return await operation()          |
+                    |   220             except Exception as exc:              |
+                    | > 221                 raise DatabaseError(f"DuckDB {ope |
+                    |   222                                                   |
+                    |   223         last_error = None                         |
+                    |   224         for attempt in range(1, self.MAX_RETRIES  |
+                    +---------------------------------------------------------+
+                    DatabaseError: DuckDB fetchall failed: Catalog Error:      
+                    Scalar Function with name date_format does not exist!      
+                    Did you mean "date_part"?                                  
+                                                                               
+                    LINE 1: ...%' AND SQLDATE BETWEEN '2024-01-01' AND         
+                    '2024-12-31' GROUP BY DATE_FORMAT(SQLDATE, '%Y-%m') ORDER  
+                    BY Month                                                   
+                                                                               
+                                  ^                                            
+                    Error calling tool 'execute_sql'                           
+                    +----------- Traceback (most recent call last) -----------+
+                    | E:\DBMSproject-latest\mcp_server\app\database\pool.py:2 |
+                    | 19 in _execute_with_retry                               |
+                    |                                                         |
+                    |   216     async def _execute_with_retry(self, operation |
+                    |       "operation") -> Any:                              |
+                    |   217         if self._backend == "duckdb":             |
+                    |   218             try:                                  |
+                    | > 219                 return await operation()          |
+                    |   220             except Exception as exc:              |
+                    |   221                 raise DatabaseError(f"DuckDB {ope |
+                    |   222                                                   |
+                    |                                                         |
+                    | E:\DBMSproject-latest\mcp_server\app\database\pool.py:3 |
+                    | 28 in _do_fetch                                         |
+                    |                                                         |
+                    |   325         async def _do_fetch():                    |
+                    |   326             if self._backend == "duckdb":         |
+                    |   327                 async with self._duckdb_query_loc |
+                    | > 328                     return await asyncio.to_threa |
+                    |       params, "all")                                    |
+                    |   329                                                   |
+                    |   330             async with self.acquire() as conn:    |
+                    |   331                 async with conn.cursor(aiomysql.D |
+                    |                                                         |
+                    |                 ... 2 frames hidden ...                 |
+                    |                                                         |
+                    | C:\Users\dgaz5\AppData\Local\Programs\Python\Python314\ |
+                    | Lib\concurrent\futures\thread.py:73 in run              |
+                    |                                                         |
+                    |    70                                                   |
+                    |    71     def run(self, task):                          |
+                    |    72         fn, args, kwargs = task                   |
+                    | >  73         return fn(*args, **kwargs)                |
+                    |    74                                                   |
+                    |    75                                                   |
+                    |    76 class _WorkItem:                                  |
+                    |                                                         |
+                    | E:\DBMSproject-latest\mcp_server\app\database\pool.py:3 |
+                    | 10 in _run_duckdb_query                                 |
+                    |                                                         |
+                    |   307                                                   |
+                    |   308         conn = duckdb.connect(str(self._duckdb_pa |
+                    |   309         try:                                      |
+                    | > 310             cursor = conn.execute(_normalize_duck |
+                    |   311             if fetch == "all":                    |
+                    |   312                 return _rows_to_dicts(cursor.desc |
+                    |   313             if fetch == "one":                    |
+                    +---------------------------------------------------------+
+                    CatalogException: Catalog Error: Scalar Function with name 
+                    date_format does not exist!                                
+                    Did you mean "date_part"?                                  
+                                                                               
+                    LINE 1: ...%' AND SQLDATE BETWEEN '2024-01-01' AND         
+                    '2024-12-31' GROUP BY DATE_FORMAT(SQLDATE, '%Y-%m') ORDER  
+                    BY Month                                                   
+                                                                               
+                                  ^                                            
+                                                                               
+                    The above exception was the direct cause of the following  
+                    exception:                                                 
+                                                                               
+                    +----------- Traceback (most recent call last) -----------+
+                    | C:\Users\dgaz5\AppData\Local\Programs\Python\Python314\ |
+                    | Lib\site-packages\fastmcp\server\server.py:1162 in      |
+                    | call_tool                                               |
+                    |                                                         |
+                    | C:\Users\dgaz5\AppData\Local\Programs\Python\Python314\ |
+                    | Lib\site-packages\fastmcp\tools\base.py:373 in _run     |
+                    |                                                         |
+                    |                 ... 4 frames hidden ...                 |
+                    |                                                         |
+                    | E:\DBMSproject-latest\mcp_server\app\database\pool.py:3 |
+                    | 35 in fetchall                                          |
+                    |                                                         |
+                    |   332                     await cur.execute(query, para |
+                    |   333                     return await cur.fetchall()   |
+                    |   334                                                   |
+                    | > 335         return await self._execute_with_retry(_do |
+                    |   336                                                   |
+                    |   337     async def fetchone(self, query: str, params:  |
+                    |       Optional[Dict[str, Any]]:                         |
+                    |   338         async def _do_fetch():                    |
+                    |                                                         |
+                    | E:\DBMSproject-latest\mcp_server\app\database\pool.py:2 |
+                    | 21 in _execute_with_retry                               |
+                    |                                                         |
+                    |   218             try:                                  |
+                    |   219                 return await operation()          |
+                    |   220             except Exception as exc:              |
+                    | > 221                 raise DatabaseError(f"DuckDB {ope |
+                    |   222                                                   |
+                    |   223         last_error = None                         |
+                    |   224         for attempt in range(1, self.MAX_RETRIES  |
+                    +---------------------------------------------------------+
+                    DatabaseError: DuckDB fetchall failed: Catalog Error:      
+                    Scalar Function with name date_format does not exist!      
+                    Did you mean "date_part"?                                  
+                                                                               
+                    LINE 1: ...%' AND SQLDATE BETWEEN '2024-01-01' AND         
+                    '2024-12-31' GROUP BY DATE_FORMAT(SQLDATE, '%Y-%m') ORDER  
+                    BY Month                                                   
+                                                                               
+                                  ^                                            
+INFO:     127.0.0.1:56051 - "POST /messages/?session_id=7e16dcf5abe44ae292cdaf35cd74d8e5 HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:56051 - "POST /messages/?session_id=7e16dcf5abe44ae292cdaf35cd74d8e5 HTTP/1.1" 202 Accepted
+[GDELT] Server Starting...
+[GDELT] Transport: sse
+[GDELT] SSE Server: http://localhost:8000/sse
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                                                                             │
+│                                                                             │
+│                        ▄▀▀ ▄▀█ █▀▀ ▀█▀ █▀▄▀█ █▀▀ █▀█                        │
+│                        █▀  █▀█ ▄▄█  █  █ ▀ █ █▄▄ █▀▀                        │
+│                                                                             │
+│                                                                             │
+│                                FastMCP 3.2.0                                │
+│                            https://gofastmcp.com                            │
+│                                                                             │
+│                 🖥  Server:      gdelt-server, 3.2.0                         │
+│                 🚀 Deploy free: https://horizon.prefect.io                  │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                         🎉 Update available: 3.2.4                          │
+│                     Run: pip install --upgrade fastmcp                      │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+
+[GDELT] Initializing MCP Server...
+[GDELT] Database connection pool initialized
+[GDELT] Database health check passed (latency: 0.82ms)
+[GDELT] MCP Server ready
+[04/15/26 14:03:59] INFO     Starting MCP server               transport.py:299
+                             'gdelt-server' with transport                     
+                             'sse' on                                          
+                             http://127.0.0.1:8000/sse                         
+INFO:     Started server process [3452]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:62602 - "GET /sse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62605 - "POST /messages/?session_id=5de3e3e483574f5da67928e562591707 HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:62605 - "POST /messages/?session_id=5de3e3e483574f5da67928e562591707 HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:62605 - "POST /messages/?session_id=5de3e3e483574f5da67928e562591707 HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:62605 - "POST /messages/?session_id=5de3e3e483574f5da67928e562591707 HTTP/1.1" 202 Accepted

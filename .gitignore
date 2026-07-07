@@ -1,0 +1,70 @@
+# ================================================
+# Python
+# ================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Virtual environments
+venv/
+.venv/
+ENV/
+env/
+
+# ================================================
+# Frontend dependencies and build output
+# ================================================
+node_modules/
+frontend/node_modules/
+frontend/dist/
+
+# ================================================
+# Local environment and secrets
+# ================================================
+.env
+.env.*
+!.env.example
+secrets/*
+!secrets/README.md
+
+# ================================================
+# Local temporary files
+# ================================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+tmp/
+AGENTS.md
+
+# ================================================
+# Local database dumps and generated DB files
+# ================================================
+*.db
+*.sqlite
+*.sqlite3
+*.duckdb
+*.sql.gz
+*.dump
+
+# Keep the packaged ChromaDB retrieval index for this private repo.
+!chroma_db/
+!chroma_db/**
+
+# Local sync state
+db_scripts/sync_progress.txt
+
+# ================================================
+# Test scratch files
+# ================================================
+test_*.py
+*_test.py

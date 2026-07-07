@@ -1,0 +1,31 @@
+device=cuda
+cuda_device=NVIDIA GeForce RTX 3060 Laptop GPU
+windows=254656 series=736 dimension_groups=184
+global_daily_rows=366
+country_count=3
+actor_count=50
+country_pair_count=30
+actor_pair_count=30
+event_root_count=20
+event_code_count=50
+series_preview=['actor:ADMINISTRATION:all', 'actor:ADMINISTRATION:conflict', 'actor:ADMINISTRATION:cooperation', 'actor:ADMINISTRATION:protest', 'actor:AMERICAN:all', 'actor:AMERICAN:conflict', 'actor:AMERICAN:cooperation', 'actor:AMERICAN:protest']
+split_strategy=time_based split_day_index=311 train_samples=218592 val_samples=36064
+epoch=001 train_loss=-0.00966 val_loss=-0.05471 val_mae=179.795 val_rmse=1131.617 monitor_mae=179.79494
+epoch=010 train_loss=-0.09934 val_loss=-0.06503 val_mae=162.464 val_rmse=1080.720 monitor_mae=162.46358
+epoch=020 train_loss=-0.11063 val_loss=-0.07935 val_mae=118.535 val_rmse=761.750 monitor_mae=118.53535
+epoch=030 train_loss=-0.11406 val_loss=-0.07312 val_mae=140.043 val_rmse=898.054 monitor_mae=140.04326
+epoch=040 train_loss=-0.11574 val_loss=-0.07745 val_mae=122.108 val_rmse=841.834 monitor_mae=122.10794
+epoch=050 train_loss=-0.11776 val_loss=-0.07294 val_mae=137.341 val_rmse=975.447 monitor_mae=137.34117
+epoch=060 train_loss=-0.11951 val_loss=-0.07691 val_mae=127.929 val_rmse=849.026 monitor_mae=127.92926
+epoch=070 train_loss=-0.12075 val_loss=-0.07972 val_mae=113.158 val_rmse=764.295 monitor_mae=113.15783
+epoch=080 train_loss=-0.12214 val_loss=-0.08355 val_mae=101.598 val_rmse=705.278 monitor_mae=101.59848
+metrics neural_thp mae=100.726 rmse=696.812 mape=37.144
+metrics naive_last mae=202.133 rmse=1200.802 mape=52.908
+metrics moving_avg_7 mae=167.738 rmse=907.720 mape=49.559
+metrics empirical_hawkes mae=168.444 rmse=947.017 mape=48.926
+saved_checkpoint=/app/models/thp_gdelt.pt
+best_val_loss=-0.08427
+best_epoch=67
+best_mae=100.72595
+samples=254656 series=736
+label_preview=[('actor:ADMINISTRATION', 'all'), ('actor:ADMINISTRATION', 'all'), ('actor:ADMINISTRATION', 'all')]
