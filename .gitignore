@@ -55,6 +55,7 @@ AGENTS.md
 *.duckdb
 *.sql.gz
 *.dump
+gdelt_mysql_backup*.sql
 
 # Keep the packaged ChromaDB retrieval index for this private repo.
 !chroma_db/
